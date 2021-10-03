@@ -1,4 +1,17 @@
 {
+<<<<<<< HEAD
+  "name": "BubbaBandz",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.1"
+=======
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -10,6 +23,7 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
+>>>>>>> 0bf79f93e1c25fb487a2249d00fb68727df65733
   },
   "scripts": {
     "start": "react-scripts start",

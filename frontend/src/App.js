@@ -1,3 +1,21 @@
+<<<<<<< HEAD
+import { Component } from 'react';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+  
+  
+  render () {
+    return (
+      <div className="App">
+          <h1>Hello World</h1>
+      </div>
+    );
+  }
+=======
 import logo from './logo.svg';
 import './App.css';
 
@@ -20,6 +38,7 @@ function App() {
       </header>
     </div>
   );
+>>>>>>> 0bf79f93e1c25fb487a2249d00fb68727df65733
 }
 
 export default App;
