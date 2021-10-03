@@ -17,3 +17,5 @@ pip install -r backend/requirements.txt
 
 The frontend is written with Node. To install dependencies, navigate into the
 `frontend/` folder and run `yarn` or `npm` to install the node dependencies.
+
+Am I a contributor?
