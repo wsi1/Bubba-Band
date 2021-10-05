@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from 'react-bootstrap';
 // import { withRouter } from 'react-router-dom'
 // import history from './../history';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import "./Home.css";
 
 const Home = (props) => {

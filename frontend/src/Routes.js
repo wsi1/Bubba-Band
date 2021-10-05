@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Home from "./Home/Home";
 import Calibration from "./Calibration/Calibration";
@@ -11,9 +11,9 @@ export default class Routes extends Component {
         return (
             <Router history={history}>
                 <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/calibration" component={Calibration} />
-                    <Route path="/interpretation" component={Interpretation} />
+                    <Route path="/" exact><Home/></Route>
+                    <Route path="/calibration"><Calibration /></Route>
+                    <Route path="/interpretation"><Interpretation /></Route>
                 </Switch>
             </Router>
         )
