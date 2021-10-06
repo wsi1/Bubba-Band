@@ -8,18 +8,18 @@ def connect():
     while True:
         make_gesture()
 
-def send_message_frontend(data):
+def send_message_as_raspberry(data):
     print('message received with ', data)
-    sio.emit("frontend", data)
+    sio.emit("raspberry", data)
 
 def make_gesture():
     val = input("Gesture #: ")
     if val == "1":
-        send_message_frontend({"gesture" : "strong tap"})
+        send_message_as_raspberry({"gesture" : "strong tap"})
     elif val == "2":
-        send_message_frontend({"gesture" : "weak tap"})
+        send_message_as_raspberry({"gesture" : "weak tap"})
     elif val =="3":
-        send_message_frontend({"gesture" : "wrist down"})
+        send_message_as_raspberry({"gesture" : "wrist down"})
 
 @sio.event
 def disconnect():
