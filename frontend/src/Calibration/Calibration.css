@@ -1,0 +1,32 @@
+h1, h2 {
+    text-align: center;
+}
+
+h2 {
+    padding: 20px;
+}
+
+.calibrate {
+    position: relative;
+}
+.add {
+    width: 75%;
+    height: auto;
+    margin: 0;
+    
+    padding: 20px;
+    position: absolute;
+
+    background-color: lightskyblue;
+    border: none;
+
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+
+.add:hover {
+    background-color:darkgrey;
+    border: 5px solid lightskyblue;
+}

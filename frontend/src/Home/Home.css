@@ -1,0 +1,41 @@
+button {
+  padding: 20px;
+  margin-top: 20px;
+}
+
+h1, p {
+  padding: auto;
+  margin: auto;
+  text-align: center;
+}
+
+h1 {
+  padding-top: 3%;
+}
+
+p {
+  padding-bottom: 3%;
+  font-size: x-large;
+}
+
+.flex-container {
+  column-gap: 5%;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  padding: auto;
+  margin: auto;
+}
+
+.Home {
+  margin-top: 25%;
+}
+
+.lander {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
