@@ -43,8 +43,13 @@ const Interpretation = (props) => {
             </div>
             <button id="yes" onClick={() => displayYes(setState)}>Test yes</button>
             <button id="no" onClick={() => displayNo(setState)}>Test no</button>
-            <div className={state.showYes ? "yesResponse" : "hidden"}></div>
-            <div className={state.showNo ? "noResponse" : "hidden"}></div>
+            <div className={state.showYes ? "yesResponse" : "hidden"}>
+                <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
+                <p class="responseText">☑</p>
+            </div>
+            <div className={state.showNo ? "noResponse" : "hidden"}>
+                <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
+            </div>
         </div>
     );
 }
