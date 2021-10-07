@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import Routes from './Routes';
-
 import { io } from "socket.io-client";
 
 class App extends Component {
