@@ -11,8 +11,8 @@ const Home = (props) => {
           <h1>Welcome to Bubba Band!</h1>
           <p>Select a mode below to begin</p>
           <div class="flex-container">
-            <button variant="btn btn-success" onClick={() => history.push('/calibration')}>Calibration</button>
-            <button variant="btn btn-success" onClick={() => history.push('/interpretation')}>Interpretation</button>
+            <button variant="btn btn-success" class="homeButton" onClick={() => history.push('/calibration')}>Calibration</button>
+            <button variant="btn btn-success" class="homeButton" onClick={() => history.push('/interpretation')}>Interpretation</button>
           </div>
         </div>
       </div>
