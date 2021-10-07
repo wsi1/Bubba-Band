@@ -13,7 +13,6 @@ class App extends Component {
       socket.on("frontend", (data) => console.log(data))
   }
   
-  
   render () {
     return (
       <div className="App">

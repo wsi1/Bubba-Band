@@ -17,7 +17,7 @@ const Calibration = (props) => {
       <div>
         {state ==="calibrate"  ?
         <div>
-          <button onClick={() => history.push("/")}>← Go Back</button>
+          <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
           <h1>Calibration</h1>
           <h2>Select an existing gesture or add a new gesture:</h2>
           <br />

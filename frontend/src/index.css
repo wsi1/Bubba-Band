@@ -5,11 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-border-radius: initial;
-  -moz-border-radius: initial;
-  -o-border-radius: initial;
-  border-radius: initial;
-  border: initial;
 }
 
 code {
@@ -21,23 +16,24 @@ code {
   background-color: darkgrey;
 }
 
-button {
+div > button {
   padding: 20px;
   background-color: lightskyblue;
   border: none;
+  border-radius: 15px;
   }
 
 button:hover {
-  background-color:darkgrey;
+  background-color:#348feb;
   padding: 16px;
-  border: 4px solid lightskyblue;
+  border: 4px solid #348feb;
+  color: white;
 }
 
-svg {
-  width: 60px;
-  height: 60px;
-  fill: lightskyblue;
-}
-svg:hover {
-  fill: darkgrey;
+.goBackButton {
+  margin-top: 15px;
+  margin-left: 20px;
+  width: 10%;
+  line-height: 5px;
+  z-index: 10;
 }

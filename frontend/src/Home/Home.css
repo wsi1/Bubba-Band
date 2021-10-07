@@ -1,6 +1,8 @@
-button {
+.homeButton {
   padding: 20px;
   margin-top: 20px;
+  width: 40%;
+  font-size: 20px;
 }
 
 h1, p {
@@ -9,8 +11,9 @@ h1, p {
   text-align: center;
 }
 
-h1 {
+.Home > .lander > h1 {
   padding-top: 3%;
+  font-size: 5em;
 }
 
 p {

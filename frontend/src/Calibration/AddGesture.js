@@ -9,7 +9,7 @@ const AddGesture = (props) => {
 
     return (
       <div className="addGesture">
-        <button onClick={() => history.push("/calibration")}>← Go Back</button>
+        <button class="goBackButton" onClick={() => history.push("/calibration")}>← Go back</button>
         <h1> Create a new gesture </h1>
         <h2>Type in gesture name: </h2>
 
