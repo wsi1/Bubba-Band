@@ -40,14 +40,14 @@ const AddGesture = (props) => {
         <button className="goBackButton" onClick={() => goBack(props.parentState, props.setter)}>← Go back</button>
         <h1> Create a new gesture </h1>
         <h2>Type in gesture name: </h2>
-
-        <form onSubmit={() => {
-
-          handleSubmit(state.value, props.setter, props.parentState)
-          }}>
-          <input type="text" value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
-          <input type="submit" value="Add Gesture" />
-        </form>
+        <div className="form-center">
+          <form onSubmit={() => {
+              handleSubmit(state.value, props.setter, props.parentState)
+            }}>
+            <input type="text" value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
+            <input type="submit" value="Add Gesture" />
+          </form>
+        </div>
       </div>
     );
   };

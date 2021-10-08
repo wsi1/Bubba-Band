@@ -1,5 +1,8 @@
 import React, { Component, useState } from 'react';
 import waiting from '../messages-typing.gif'; // Tell webpack this JS file uses this image
+import checkmark from '../checkmark.png'; // Tell webpack this JS file uses this image
+import xmark from '../xmark.png'; // Tell webpack this JS file uses this image
+import wave from '../wave.png'; // Tell webpack this JS file uses this image
 import { useHistory } from 'react-router-dom';
 import "./Interpretation.css";
 
@@ -8,37 +11,40 @@ function displayResponse(setState, response) {
     if (response == 'yes') {
         console.log('yes branch');
         setState({
-            displayYes: true,
+            image: checkmark,
+            text: 'Yes!'
         });
         setTimeout(() => {
             setState({
-                displayWaiting: true,
-                displayYes: false,
+                image: waiting,
+                text: 'Waiting for a response...'
             });
-        }, 2000);
+        }, 3000);
     } else if (response == 'no') {
         console.log('no branch');
         setState({
-            displayNo: true,
+            image: xmark,
+            text: 'No!'
         });
         setTimeout(() => {
             setState({
-                displayWaiting: true,
-                displayNo: false,
+                image: waiting,
+                text: 'Waiting for a response...'
             });
-        }, 2000);
+        }, 3000);
 
     } else if (response == 'hi') {
         console.log('hi branch');
         setState({
-            displayHi: true,
+            image: wave,
+            text: 'Hi!'
         });
         setTimeout(() => {
             setState({
-                displayWaiting: true,
-                displayHi: false,
+                image: waiting,
+                text: 'Waiting for a response...'
             });
-        }, 2000);
+        }, 3000);
     }
 };
 
@@ -49,34 +55,34 @@ const Interpretation = (props) => {
         displayYes: false,
         displayNo: false,
         displayHi: false,
+        image: waiting,
+        text: 'Waiting for a response...'
     });
 
     return (
         <div>
             <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
             <h1>Interpretation Page</h1>
-            <div className={state.displayWaiting ? "center" : "hidden"}>
-                <img class="img" src={waiting} alt="Logo"/>
-                <p>Waiting for a response...</p>
+            <div className="center">
+                <img class="img" src={state.image} alt="Logo"/>
+                <p>{state.text}</p>
             </div>
             <button id="yes" onClick={() => displayResponse(setState, 'yes')}>yes</button>
             <button id="no" onClick={() => displayResponse(setState, 'no')}>no</button>
-            <button id="hi" onClick={() => {
-                console.log('hey');
-                displayResponse(setState, 'hi');
-            }}>hi</button>
-            <div className={state.displayYes ? "yesResponse" : "hidden"}>
+            <button id="hi" onClick={() => displayResponse(setState, 'hi')}>hi</button>
+
+            {/* <div className={state.displayYes ? "yesResponse" : "hidden"}>
                 <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
                 <p class="responseText">☑</p>
-            </div>
-            <div className={state.displayNo ? "noResponse" : "hidden"}>
+            </div> */}
+            {/* <div className={state.displayNo ? "noResponse" : "hidden"}>
                 <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
-                <p class="responseText">☒</p>
+                <p class="responseText">☒<br/>is this working?</p>
             </div>
             <div className={state.displayHi ? "hiResponse" : "hidden"}>
                 <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
-                <p class="responseText">👋🏻</p>
-            </div>
+                <p class="responseText">👋🏻<br/>test</p>
+            </div> */}
         </div>
     );
 }
