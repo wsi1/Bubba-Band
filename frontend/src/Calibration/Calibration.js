@@ -4,28 +4,39 @@ import AddGesture from './AddGesture';
 
 import "./Calibration.css";
 
-function handleClick(history, state) {
-  history.push('/addGesture');
-  state = "add";
+function handleClick(state, setState) {
+  setState({
+    view: "add",
+    gestures: state.gestures
+  });
 }
 
 const Calibration = (props) => {
     const history = useHistory();
-    const [state, setState] = useState("calibrate");
+    const [state, setState] = useState({
+      view: "calibrate",
+      gestures: []
+    });
 
+    console.log("Calibration's state: ", state);
     return (
       <div>
-        {state ==="calibrate"  ?
-        <div>
-          <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
-          <h1>Calibration</h1>
-          <h2>Select an existing gesture or add a new gesture:</h2>
-          <br />
-          <button className="add" onClick={() => {handleClick(history, state)}}>Add Gesture +</button>
-          <br />
-        </div> :
+        {state.view ==="calibrate"  ?
+          <div>
+            <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
+            <h1>Calibration</h1>
+            <h2>Select an existing gesture or add a new gesture:</h2>
+            <br />
+            <button className="add" onClick={() => {handleClick(state, setState)}}>Add Gesture +</button>
+            <br />
 
-        <AddGesture />
+            {(state.gestures).map( (gesture) =>
+              <button type="button">{gesture}</button>
+            )}
+
+          </div> 
+        :
+          <AddGesture setter={setState} parentState={state} />
         }
     </div>
     );

@@ -7,7 +7,6 @@ import AddGesture from "./Calibration/AddGesture";
 import Interpretation from "./Interpretation/Interpretation";
 import history from './history';
 
-
 export default class Routes extends Component {
     render() {
         return (
