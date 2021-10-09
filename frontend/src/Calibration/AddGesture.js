@@ -3,20 +3,29 @@ import { useHistory } from 'react-router-dom';
 
 import "./AddGesture.css";
 
-function handleSubmit(val, setState, state) {
-  var newState = state.gestures;
-  if (typeof newState === "undefined") {
-    newState = [val]
+function handleSubmit(event, val, setState, state) {
+  event.preventDefault();
+  if (val === "") {
+    window.alert("Label can't be empty");
+    return false;
   }
   else {
+    var newState = state.gestures;
+    if (typeof newState === "undefined") {
+      newState = [val];
+    }
+    else {
+      newState.push(val);
+    }
     
-    newState.push(val);
+    setState({
+      view: "calibrate",
+      gestures: newState,
+    });
+
+    return true;
   }
   
-  setState({
-    view: "calibrate",
-    gestures: newState,
-  });
 }
 
 function goBack(state, setState) {
@@ -25,6 +34,7 @@ function goBack(state, setState) {
     gestures: state.gestures,
   })
 }
+
 function handleChange(e, setState) {
   setState({value: e.target.value});
 }
@@ -41,8 +51,8 @@ const AddGesture = (props) => {
         <h1> Create a new gesture </h1>
         <h2>Type in gesture name: </h2>
         <div className="form-center">
-          <form onSubmit={() => {
-              handleSubmit(state.value, props.setter, props.parentState)
+          <form onSubmit={(e, ) => {
+              handleSubmit(e, state.value, props.setter, props.parentState)
             }}>
             <input type="text" value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
             <input type="submit" value="Add Gesture" />

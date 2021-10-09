@@ -2,7 +2,8 @@ input[type=text] {
     padding: 12px 20px;
     margin: 8px 0;
 
-    outline: none;
+    outline: none !important;
+    border:1px solid darkgrey;
     border-radius: 8px;
 
     text-align: center;
@@ -10,12 +11,24 @@ input[type=text] {
 }
 
 input[type=text]:focus {
-    outline: none !important;
-    border:1px solid darkgrey;
+    outline: none;
+    border-radius: 8px;
 }
 
 input[type=submit] {
     display: block;
+
+    padding: 10px;
+    background-color: lightskyblue;
+    border: none;
+    border-radius: 15px;
+}
+
+input[type=submit]:hover {
+    background-color:#348feb;
+    padding: 6px;
+    border: 4px solid #348feb;
+    color: white;
 }
 
 .form-center {

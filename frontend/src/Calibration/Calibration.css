@@ -6,15 +6,24 @@ h2 {
     padding: 20px;
 }
 
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    width: 50%;
+    border: 10px;
+}
+
 .calibrate {
     position: relative;
 }
 .add {
     width: 75%;
     height: auto;
-    margin: 0;
     
     padding: 20px;
+    margin-bottom: 30px;
     position: absolute;
 
     background-color: lightskyblue;
@@ -31,4 +40,31 @@ h2 {
     padding: 16px;
     border: 4px solid #348feb;
     color: white;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.temp {
+    position: absolute;
+    left:    0;
+    bottom:   0;
+}
+.smallHead {
+    font-size: 28px;
+    flex-basis: 50%; 
+}
+
+.gestures {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 500px 30px;
 }

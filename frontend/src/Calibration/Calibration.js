@@ -1,41 +1,53 @@
 import React, { Component, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AddGesture from './AddGesture';
+import waiting from "../images/messages-typing.gif";
 
 import "./Calibration.css";
 
-function handleClick(state, setState) {
-  setState({
-    view: "add",
-    gestures: state.gestures
-  });
+function changeView(nextState, curState, setState) {
+  var prevState = curState;
+  prevState["view"] = nextState;
+  console.log("Calibration State: ", prevState);
+  setState({prevState});
 }
 
 const Calibration = (props) => {
     const history = useHistory();
     const [state, setState] = useState({
-      view: "calibrate",
+      view: "waiting",
       gestures: []
     });
 
-    console.log("Calibration's state: ", state);
     return (
       <div>
-        {state.view ==="calibrate"  ?
+        { state.view == "waiting" ?
+
+          <div className="waiting">
+            <button className="goBackButton" onClick={() => history.push("/")}>← Go back</button>
+            <div className="container">
+              <img src={waiting} alt="Logo"/>
+              <h1 className="smallHead"> Waiting for a response . . . </h1>
+              <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState)}> Make a gesture </button>
+            </div>
+          </div>
+
+        : state.view === "calibrate"  ?
           <div>
-            <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
+            <button className="goBackButton" onClick={() => history.push("/")}>← Go back</button>
             <h1>Calibration</h1>
             <h2>Select an existing gesture or add a new gesture:</h2>
             <br />
-            <button className="add" onClick={() => {handleClick(state, setState)}}>Add Gesture +</button>
+            <button className="add" onClick={() => {changeView("add", state, setState)}}>Add Gesture +</button>
             <br />
 
-            {(state.gestures).map( (gesture) =>
-              <button type="button">{gesture}</button>
-            )}
-
+            <div className="gestures">
+              {(state.gestures).map( (gesture) =>
+                <button type="button">{gesture}</button>
+              )}
+            </div>
           </div> 
-        :
+        : 
           <AddGesture setter={setState} parentState={state} />
         }
     </div>
