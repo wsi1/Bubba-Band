@@ -16,7 +16,7 @@ const Settings = (props) => {
   return (
     <div>
       <h1>Settings</h1>
-      <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
+      <button class="goBackButton" onClick={() => goBack(props.parentState, props.setter)}>← Go back</button>
     </div>
   );
 };

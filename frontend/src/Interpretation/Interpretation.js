@@ -98,7 +98,7 @@ const Interpretation = (props) => {
         <div>
         { state.view == "main" ?
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
-                <button class="goBackButton" onClick={() => history.goBack()}>← Go back</button>
+                <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
                 <button id="settings" onClick={() => setViewToSettings(state, setState)}>⚙ Settings</button>
                 <h1 style={{backgroundColor: state.backgroundColor}}>Interpretation Page</h1>
                 <div className="center" style={{backgroundColor: state.backgroundColor}}>

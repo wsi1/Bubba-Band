@@ -5,6 +5,7 @@ import Home from "./Home/Home";
 import Calibration from "./Calibration/Calibration";
 import AddGesture from "./Calibration/AddGesture";
 import Interpretation from "./Interpretation/Interpretation";
+import Settings from "./Interpretation/Settings";
 import history from './history';
 
 export default class Routes extends Component {
@@ -16,6 +17,7 @@ export default class Routes extends Component {
                     <Route path="/calibration"><Calibration /></Route>
                     <Route path="/interpretation"><Interpretation /></Route>
                     <Route path="/addGesture"><AddGesture /></Route>
+                    <Route path="/interpretation/settings"><Settings /></Route>
                 </Switch>
             </Router>
         )

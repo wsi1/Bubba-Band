@@ -6,6 +6,8 @@ import waiting from "../images/messages-typing.gif";
 import "./Calibration.css";
 
 function changeView(nextState, curState, setState) {
+  console.log("nextState: ", nextState);
+  console.log("curState: ", curState);
   var prevState = curState;
   prevState["view"] = nextState;
   console.log("Calibration State: ", prevState);
