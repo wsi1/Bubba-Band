@@ -4,11 +4,13 @@ import waiting from '../images/messages-typing.gif'; // Tell webpack this JS fil
 //import checkmark from '../images/checkmark.png'; // Tell webpack this JS file uses this image
 import nodding_head from '../images/yes.gif';
 //import xmark from '../images/xmark.png'; // Tell webpack this JS file uses this image
-import shaking_head from '../images/no.gif';
+//import shaking_head from '../images/no.gif';
 import wave from '../images/waving.gif'; // Tell webpack this JS file uses this image
 import maybe from '../images/maybe.gif'; // Tell webpack this JS file uses this image
+import come from '../images/come.gif';
 import yes_audio from '../audios/yes.mp3';
 import no_audio from '../audios/no.mp3';
+import come_audio from '../audios/come.mp3';
 import hi_audio from '../audios/hi.mp3';
 import maybe_audio from '../audios/maybe.mp3';
 import { useHistory } from 'react-router-dom';
@@ -29,10 +31,10 @@ function displayResponse(state, setState, response) {
 
     } else if (response == 'no') {
         console.log('no branch');
-        audio = new Audio(no_audio);
+        audio = new Audio(come_audio);
 
-        responseImage = shaking_head;
-        responseText = 'No!';
+        responseImage = come;
+        responseText = 'Can someone come here?';
         responseColor = '#ad301f';
 
     } else if (response == 'hi') {
