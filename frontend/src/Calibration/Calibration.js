@@ -45,7 +45,8 @@ const Calibration = (props) => {
             <br />
             <button className="add" onClick={() => {changeView("add", state, setState)}}>Add Gesture +</button>
             <br />
-
+            <hr className="divide"/>
+            <br />
             <div className="gestures">
               {(state.gestures).map( (gesture) =>
                 <button type="button">{gesture}</button>

@@ -26,6 +26,25 @@ const Settings = (props) => {
   return (
     <div>
       <button class="goBackButton" onClick={() => goBack(props.parentState, props.setter)}>← Go back</button>
+      <div class="content">
+        <div class="settings">
+          <p class="title">Visual response</p>
+          <p class="descr">Display response on screen</p>
+          <div class="buttonContainer">
+            <button class="settingsButton" onClick={() => console.log("on")}>ON</button>
+            <button class="settingsButton" onClick={() => console.log("off")}>OFF</button>
+          </div>
+        </div>
+        <div class="settings">
+          <p class="title">Auditory response</p>
+          <p class="descr">Output response through speaker</p>
+          <div class="buttonContainer">
+            <button class="settingsButton" onClick={() => console.log("on")}>ON</button>
+            <button class="settingsButton" onClick={() => console.log("off")}>OFF</button>
+          </div>
+        </div>
+      </div>
+
       <h1>Settings</h1>
     </div>
   );

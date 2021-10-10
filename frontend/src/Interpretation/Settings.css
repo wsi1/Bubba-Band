@@ -1,0 +1,43 @@
+.content {
+  margin-top: 2%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 70vw;
+}
+
+.settings {
+  width: 90%;
+}
+
+.buttonContainer {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  column-gap: 10px;
+  margin-top: 40px;
+}
+
+.settingsButton {
+  line-height: 5px;
+  width: 90px;
+}
+
+.descr {
+  font-size: 16pt;
+  padding-top: 0px;
+}
+
+p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.title {
+  font-size: 28pt;
+}

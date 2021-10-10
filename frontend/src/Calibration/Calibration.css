@@ -15,6 +15,17 @@ img {
     border: 10px;
 }
 
+hr.divide {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-top: 50px;
+    opacity: 1;
+    border: 1px solid darkgrey;
+    
+    
+    
+}
+
 .calibrate {
     position: relative;
 }
@@ -61,10 +72,12 @@ img {
 }
 
 .gestures {
-    margin-top: 50px;
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 500px 30px;
+    gap: 50px 30px;
 }
+
+

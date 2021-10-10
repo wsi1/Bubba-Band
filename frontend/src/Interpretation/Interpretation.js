@@ -4,9 +4,11 @@ import waiting from '../images/messages-typing.gif'; // Tell webpack this JS fil
 import checkmark from '../images/checkmark.png'; // Tell webpack this JS file uses this image
 import xmark from '../images/xmark.png'; // Tell webpack this JS file uses this image
 import wave from '../images/wave.gif'; // Tell webpack this JS file uses this image
+import maybe from '../images/maybe.gif'; // Tell webpack this JS file uses this image
 import yes_audio from '../audios/yes.mp3';
 import no_audio from '../audios/no.mp3';
 import hi_audio from '../audios/hi.mp3';
+import maybe_audio from '../audios/maybe.mp3';
 import { useHistory } from 'react-router-dom';
 import Settings from './Settings';
 import "./Interpretation.css";
@@ -56,6 +58,20 @@ function displayResponse(setState, response) {
                 text: 'Waiting for a response...'
             });
         }, 3000);
+    } else if (response == 'maybe') {
+        console.log('maybe branch');
+        new Audio(maybe_audio).play();
+        setState({
+            image: maybe,
+            text: 'Maybe...',
+            backgroundColor: '#f5a85b'
+        });
+        setTimeout(() => {
+            setState({
+                image: waiting,
+                text: 'Waiting for a response...',
+            });
+        }, 3000);
     }
 };
 
@@ -71,8 +87,21 @@ function setViewToSettings(state, setState) {
 
 const Interpretation = (props) => {
     const socket = useContext(SocketContext);
+    let currGesture = ""
+    let numCurrGesture = 0
 
-    const socketHandler = (data) => console.log(data);
+    // TODO: should I be using a mutex for incrementing the value??
+    // Handle the data from socket to keep track of number of gestures
+    function socketHandler(data) {
+        if (data.gesture == currGesture) {
+            numCurrGesture += 1;
+        }
+        else {
+            currGesture = data.gesture;
+            numCurrGesture = 0;
+        }
+    }
+
     useEffect(() => {
         // as soon as the component is mounted, do the following tasks:
         // subscribe to socket events
@@ -84,6 +113,26 @@ const Interpretation = (props) => {
           socket.off("frontend", socketHandler);
         };
     }, [socket]);
+
+    function interpretGesture() {
+        if (currGesture == "soft tap") {
+            if (numCurrGesture == 1) {
+                displayResponse(setState, 'maybe');
+            }
+        }
+        else if (currGesture == "hard tap") {
+            if (numCurrGesture == 1) {
+                displayResponse(setState, 'yes');
+            }
+            else if (numCurrGesture == 2) {
+                displayResponse(setState, 'hi');
+            }
+        }
+        currGesture = "";
+        numCurrGesture = 0;
+    }
+
+    const interpretEvery2Seconds = window.setInterval(interpretGesture, 2000);
 
     const history = useHistory();
     const [state, setState] = useState({
@@ -115,6 +164,7 @@ const Interpretation = (props) => {
                     <button id="yes" onClick={() => displayResponse(setState, 'yes')}>yes</button>
                     <button id="no" onClick={() => displayResponse(setState, 'no')}>no</button>
                     <button id="hi" onClick={() => displayResponse(setState, 'hi')}>hi</button>
+                    <button id="maybe" onClick={() => displayResponse(setState, 'maybe')}>maybe</button>
                 </div>
             </div>
 

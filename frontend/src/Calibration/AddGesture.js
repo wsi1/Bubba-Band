@@ -54,7 +54,7 @@ const AddGesture = (props) => {
           <form onSubmit={(e, ) => {
               handleSubmit(e, state.value, props.setter, props.parentState)
             }}>
-            <input type="text" value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
+            <input type="text" autoFocus value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
             <input type="submit" value="Add Gesture" />
           </form>
         </div>
