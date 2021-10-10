@@ -123,30 +123,6 @@ const Interpretation = (props) => {
         };
     }, [socket]);
 
-    function interpretGesture() {
-      console.log("1 second has passed, processing gesture(s) now")
-        if (currGesture == "soft tap") {
-            if (numCurrGesture == 1) {
-                displayResponse(setState, 'maybe');
-            }
-        }
-        else if (currGesture == "hard tap") {
-            if (numCurrGesture == 1) {
-                displayResponse(setState, 'yes');
-            }
-            else if (numCurrGesture == 2) {
-                displayResponse(setState, 'hi');
-            }
-            else if (numCurrGesture > 4) {
-              displayResponse(setState, 'no')
-            }
-        }
-        currGesture = "";
-        numCurrGesture = 0;
-    }
-
-    // const interpretEvery2Seconds = window.setInterval(interpretGesture, 1500);
-
     const history = useHistory();
     const [state, setState] = useState({
         backgroundColor: '#1c1c1c',
@@ -159,6 +135,31 @@ const Interpretation = (props) => {
         image: waiting,
         text: 'Waiting for a response...'
     });
+
+
+    function interpretGesture() {
+      console.log("1 second has passed, processing gesture(s) now")
+        if (currGesture == "soft tap") {
+            if (numCurrGesture == 1) {
+                displayResponse(state, setState, 'maybe');
+            }
+        }
+        else if (currGesture == "hard tap") {
+            if (numCurrGesture == 1) {
+                displayResponse(state, setState, 'yes');
+            }
+            else if (numCurrGesture == 2) {
+                displayResponse(state, setState, 'hi');
+            }
+            else if (numCurrGesture > 4) {
+              displayResponse(state, setState, 'no')
+            }
+        }
+        currGesture = "";
+        numCurrGesture = 0;
+    }
+
+    // const interpretEvery2Seconds = window.setInterval(interpretGesture, 1500);
 
     console.log("interpretation render");
     console.log(state.view == "settings");
