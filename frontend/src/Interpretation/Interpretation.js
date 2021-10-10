@@ -60,9 +60,12 @@ function displayResponse(setState, response) {
 };
 
 function setViewToSettings(state, setState) {
-    var prevState = state;
-    state["view"] = "settings";
-    setState({state: prevState});
+    setState({
+        view: "settings",
+    })
+    var prevState = {state};
+    prevState["view"] = "settings";
+    setState(prevState);
     console.log(state);
 }
 
@@ -84,7 +87,6 @@ const Interpretation = (props) => {
 
     const history = useHistory();
     const [state, setState] = useState({
-        view: "main",
         backgroundColor: '#1c1c1c',
         displayWaiting: true,
         displayYes: false,
@@ -94,13 +96,17 @@ const Interpretation = (props) => {
         text: 'Waiting for a response...'
     });
 
+    console.log("interpretation render");
+    console.log(state.view == "settings");
+    console.log(state);
+
     return (
         <div>
-        { state.view == "main" ?
+        { state.view != "settings" ?
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
                 <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
                 <button id="settings" onClick={() => setViewToSettings(state, setState)}>⚙ Settings</button>
-                <h1 style={{backgroundColor: state.backgroundColor}}>Interpretation Page</h1>
+                <h1 style={{backgroundColor: state.backgroundColor}}>Interpretation</h1>
                 <div className="center" style={{backgroundColor: state.backgroundColor}}>
                     <img style={{backgroundColor: state.backgroundColor}} src={state.image} alt="Logo"/>
                     <p style={{backgroundColor: state.backgroundColor}}>{state.text}</p>
