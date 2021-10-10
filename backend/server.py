@@ -20,6 +20,10 @@ def handle_frontend_event(json):
     print('received json: ' + str(json))
     socketio.emit('raspberry', json)
 
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+
 
 if __name__ == '__main__':
     socketio.run(app)
