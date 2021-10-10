@@ -87,7 +87,10 @@ const Interpretation = (props) => {
 
     // TODO: should I be using a mutex for incrementing the value??
     // Handle the data from socket to keep track of number of gestures
+    let timeout = null
     function socketHandler(data) {
+      console.log({currGesture, numCurrGesture})
+        window.clearTimeout(timeout)
         if (data.gesture == currGesture) {
             numCurrGesture += 1;
         }
@@ -95,6 +98,7 @@ const Interpretation = (props) => {
             currGesture = data.gesture;
             numCurrGesture = 1;
         }
+        timeout = window.setTimeout(interpretGesture, 1000)
     }
 
     useEffect(() => {
@@ -110,6 +114,7 @@ const Interpretation = (props) => {
     }, [socket]);
 
     function interpretGesture() {
+      console.log("1 second has passed, processing gesture(s) now")
         if (currGesture == "soft tap") {
             if (numCurrGesture == 1) {
                 displayResponse(setState, 'maybe');
@@ -122,12 +127,15 @@ const Interpretation = (props) => {
             else if (numCurrGesture == 2) {
                 displayResponse(setState, 'hi');
             }
+            else if (numCurrGesture > 4) {
+              displayResponse(setState, 'no')
+            }
         }
         currGesture = "";
         numCurrGesture = 0;
     }
 
-    const interpretEvery2Seconds = window.setInterval(interpretGesture, 2000);
+    // const interpretEvery2Seconds = window.setInterval(interpretGesture, 1500);
 
     const history = useHistory();
     const [state, setState] = useState({
