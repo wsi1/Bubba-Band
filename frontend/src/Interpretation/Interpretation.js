@@ -17,49 +17,59 @@ import "./Interpretation.css";
 
 function displayResponse(state, setState, response) {
     console.log(response);
-    let audio;
+    let audio, responseImage, responseText, responseColor;
+
     if (response == 'yes') {
         console.log('yes branch');
         audio = new Audio(yes_audio);
-        audio.play();
-        setState({
-            image: nodding_head,
-            text: 'Yes!',
-            backgroundColor: '#18961b'
-        });
+
+        responseImage = nodding_head;
+        responseText = 'Yes!';
+        responseColor = '#18961b';
 
     } else if (response == 'no') {
         console.log('no branch');
         audio = new Audio(no_audio);
-        setState({
-            image: shaking_head,
-            text: 'No!',
-            backgroundColor: '#ad301f'
-        });
+
+        responseImage = shaking_head;
+        responseText = 'No!';
+        responseColor = '#ad301f';
 
     } else if (response == 'hi') {
         console.log('hi branch');
         audio = new Audio(hi_audio);
-        setState({
-            image: wave,
-            text: 'Hi!',
-            backgroundColor: '#2e49a3'
-        });
+
+        responseImage = wave;
+        responseText = 'Hi!';
+        responseColor = '#2e49a3';
 
     } else if (response == 'maybe') {
         console.log('maybe branch');
         audio = new Audio(maybe_audio);
-        setState({
-            image: maybe,
-            text: 'Maybe...',
-            backgroundColor: '#f5a85b'
-        });
+
+        responseImage = maybe;
+        responseText = 'Maybe...';
+        responseColor = '#f5a85b';
 
     } // end of if-else
 
+    if (state.isDisplayOn) {
+        setState({
+            image: responseImage,
+            text: responseText,
+            backgroundColor: responseColor,
+        });
+    } else {
+        setState({
+            text: responseText,
+            backgroundColor: responseColor
+        });
+    }
+    
     if (state.isAudioOn) {
         audio.play();
     }
+
     setTimeout(() => {
         setState({
             image: waiting,
@@ -71,9 +81,9 @@ function displayResponse(state, setState, response) {
 };
 
 function setViewToSettings(state, setState) {
-    setState({
-        view: "settings",
-    })
+    // setState({
+    //     view: "settings",
+    // })
     var prevState = {state};
     prevState["view"] = "settings";
     setState(prevState);
@@ -162,7 +172,7 @@ const Interpretation = (props) => {
                 <button id="settings" onClick={() => setViewToSettings(state, setState)}>⚙ Settings</button>
                 <h1 style={{backgroundColor: state.backgroundColor}}>Interpretation</h1>
                 <div className="center" style={{backgroundColor: state.backgroundColor}}>
-                    <img style={{backgroundColor: state.backgroundColor}} src={state.image} alt="Logo"/>
+                    <img class={state.image == undefined ? "hidden" : ""} style={{backgroundColor: state.backgroundColor}} src={state.image} alt="Logo"/>
                     <p style={{backgroundColor: state.backgroundColor}}>{state.text}</p>
                 </div>
                 <div class="testButtons">

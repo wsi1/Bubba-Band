@@ -5,42 +5,59 @@ import waiting from '../images/messages-typing.gif'; // Tell webpack this JS fil
 import "./Settings.css";
 
 function goBack(state, setState) {
-  // var prevState = {state};
-  // prevState["view"] = "main";
-  // setState(prevState);
-  // console.log(state);
   setState({
     backgroundColor: '#1c1c1c',
     displayWaiting: true,
     displayYes: false,
     displayNo: false,
     displayHi: false,
+    isDisplayOn: state.isDisplayOn,
+    isAudioOn: state.isAudioOn,
     image: waiting,
     text: 'Waiting for a response...'
   });
 }
 
+function changeDisplay(state, setState, isOn) {
+  setState({
+    view: "settings",
+    isDisplayOn: isOn,
+    isAudioOn: state.isAudioOn
+  })
+}
+
+function changeAudio(state, setState, isOn) {
+  setState({
+    view: "settings",
+    isDisplayOn: state.isDisplayOn,
+    isAudioOn: isOn
+  })
+}
+
 const Settings = (props) => {
   const history = useHistory();
+  const [state, setState] = useState(props.parentState.state);
+
+  console.log(state);
 
   return (
     <div>
-      <button class="goBackButton" onClick={() => goBack(props.parentState, props.setter)}>← Go back</button>
+      <button class="goBackButton" onClick={() => goBack(state, props.setter)}>← Go back</button>
       <div class="content">
         <div class="settings">
-          <p class="title">Visual response</p>
-          <p class="descr">Display response on screen</p>
+          <p class="title">Display response</p>
+          <p class="descr">Display animations on screen</p>
           <div class="buttonContainer">
-            <button class="settingsButton" onClick={() => console.log("on")}>ON</button>
-            <button class="settingsButton" onClick={() => console.log("off")}>OFF</button>
+            <button class="settingsButton" id={state.isDisplayOn ? "on" : ""} onClick={() => changeDisplay(state, setState, true)}>ON</button>
+            <button class="settingsButton" id={!state.isDisplayOn ? "on" : ""} onClick={() => changeDisplay(state, setState, false)}>OFF</button>
           </div>
         </div>
         <div class="settings">
           <p class="title">Auditory response</p>
           <p class="descr">Output response through speaker</p>
           <div class="buttonContainer">
-            <button class="settingsButton" onClick={() => console.log("on")}>ON</button>
-            <button class="settingsButton" onClick={() => console.log("off")}>OFF</button>
+            <button class="settingsButton" id={state.isAudioOn ? "on" : ""} onClick={() => changeAudio(state, setState, true)}>ON</button>
+            <button class="settingsButton" id={!state.isAudioOn ? "on" : ""} onClick={() => changeAudio(state, setState, false)}>OFF</button>
           </div>
         </div>
       </div>
