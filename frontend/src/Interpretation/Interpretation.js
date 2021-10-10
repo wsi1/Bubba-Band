@@ -1,9 +1,11 @@
 import React, { Component, useState, useContext, useEffect } from 'react';
 import { SocketContext } from '../context/socket';
 import waiting from '../images/messages-typing.gif'; // Tell webpack this JS file uses this image
-import checkmark from '../images/checkmark.png'; // Tell webpack this JS file uses this image
-import xmark from '../images/xmark.png'; // Tell webpack this JS file uses this image
-import wave from '../images/wave.gif'; // Tell webpack this JS file uses this image
+//import checkmark from '../images/checkmark.png'; // Tell webpack this JS file uses this image
+import nodding_head from '../images/yes.gif';
+//import xmark from '../images/xmark.png'; // Tell webpack this JS file uses this image
+import shaking_head from '../images/no.gif';
+import wave from '../images/waving.gif'; // Tell webpack this JS file uses this image
 import maybe from '../images/maybe.gif'; // Tell webpack this JS file uses this image
 import yes_audio from '../audios/yes.mp3';
 import no_audio from '../audios/no.mp3';
@@ -13,66 +15,59 @@ import { useHistory } from 'react-router-dom';
 import Settings from './Settings';
 import "./Interpretation.css";
 
-function displayResponse(setState, response) {
+function displayResponse(state, setState, response) {
     console.log(response);
+    let audio;
     if (response == 'yes') {
         console.log('yes branch');
-        new Audio(yes_audio).play();
+        audio = new Audio(yes_audio);
+        audio.play();
         setState({
-            image: checkmark,
+            image: nodding_head,
             text: 'Yes!',
             backgroundColor: '#18961b'
         });
-        setTimeout(() => {
-            setState({
-                image: waiting,
-                text: 'Waiting for a response...'
-            });
-        }, 3000);
+
     } else if (response == 'no') {
         console.log('no branch');
-        new Audio(no_audio).play();
+        audio = new Audio(no_audio);
         setState({
-            image: xmark,
+            image: shaking_head,
             text: 'No!',
             backgroundColor: '#ad301f'
         });
-        setTimeout(() => {
-            setState({
-                image: waiting,
-                text: 'Waiting for a response...',
-            });
-        }, 3000);
 
     } else if (response == 'hi') {
         console.log('hi branch');
-        new Audio(hi_audio).play();
+        audio = new Audio(hi_audio);
         setState({
             image: wave,
             text: 'Hi!',
             backgroundColor: '#2e49a3'
         });
-        setTimeout(() => {
-            setState({
-                image: waiting,
-                text: 'Waiting for a response...'
-            });
-        }, 3000);
+
     } else if (response == 'maybe') {
         console.log('maybe branch');
-        new Audio(maybe_audio).play();
+        audio = new Audio(maybe_audio);
         setState({
             image: maybe,
             text: 'Maybe...',
             backgroundColor: '#f5a85b'
         });
-        setTimeout(() => {
-            setState({
-                image: waiting,
-                text: 'Waiting for a response...',
-            });
-        }, 3000);
+
+    } // end of if-else
+
+    if (state.isAudioOn) {
+        audio.play();
     }
+    setTimeout(() => {
+        setState({
+            image: waiting,
+            text: 'Waiting for a response...',
+            isDisplayOn: state.isDisplayOn,
+            isAudioOn: state.isAudioOn,
+        });
+    }, 3000);
 };
 
 function setViewToSettings(state, setState) {
@@ -98,7 +93,7 @@ const Interpretation = (props) => {
         }
         else {
             currGesture = data.gesture;
-            numCurrGesture = 0;
+            numCurrGesture = 1;
         }
     }
 
@@ -141,6 +136,8 @@ const Interpretation = (props) => {
         displayYes: false,
         displayNo: false,
         displayHi: false,
+        isDisplayOn: true,
+        isAudioOn: true,
         image: waiting,
         text: 'Waiting for a response...'
     });
@@ -161,10 +158,10 @@ const Interpretation = (props) => {
                     <p style={{backgroundColor: state.backgroundColor}}>{state.text}</p>
                 </div>
                 <div class="testButtons">
-                    <button id="yes" onClick={() => displayResponse(setState, 'yes')}>yes</button>
-                    <button id="no" onClick={() => displayResponse(setState, 'no')}>no</button>
-                    <button id="hi" onClick={() => displayResponse(setState, 'hi')}>hi</button>
-                    <button id="maybe" onClick={() => displayResponse(setState, 'maybe')}>maybe</button>
+                    <button id="yes" onClick={() => displayResponse(state, setState, 'yes')}>yes</button>
+                    <button id="no" onClick={() => displayResponse(state, setState, 'no')}>no</button>
+                    <button id="hi" onClick={() => displayResponse(state, setState, 'hi')}>hi</button>
+                    <button id="maybe" onClick={() => displayResponse(state, setState, 'maybe')}>maybe</button>
                 </div>
             </div>
 
