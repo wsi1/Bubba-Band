@@ -29,8 +29,8 @@ function displayResponse(state, setState, response) {
         responseText = 'Yes!';
         responseColor = '#18961b';
 
-    } else if (response == 'no') {
-        console.log('no branch');
+    } else if (response == 'come') {
+        console.log('come branch');
         audio = new Audio(come_audio);
 
         responseImage = come;
@@ -180,7 +180,7 @@ const Interpretation = (props) => {
                 </div>
                 <div class="testButtons">
                     <button id="yes" onClick={() => displayResponse(state, setState, 'yes')}>yes</button>
-                    <button id="no" onClick={() => displayResponse(state, setState, 'no')}>no</button>
+                    <button id="no" onClick={() => displayResponse(state, setState, 'come')}>come</button>
                     <button id="hi" onClick={() => displayResponse(state, setState, 'hi')}>hi</button>
                     <button id="maybe" onClick={() => displayResponse(state, setState, 'maybe')}>maybe</button>
                 </div>
