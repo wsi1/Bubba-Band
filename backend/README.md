@@ -14,4 +14,4 @@ In the backend folder:
 python ./fakePi/fakePi.py
 ```
 
-Input 1 for a hard tap and 2 for a hard tap, which will be sent to the backend.
+Input 1 for a hard tap and 2 for a soft tap, which will be sent to the backend.
