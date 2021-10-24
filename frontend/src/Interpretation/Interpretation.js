@@ -15,7 +15,12 @@ import hi_audio from '../audios/hi.mp3';
 import maybe_audio from '../audios/maybe.mp3';
 import { useHistory } from 'react-router-dom';
 import Settings from './Settings';
+import useSound from "use-sound";
+import back_audio from "../audios/go_back.mp3";
+import settings_audio from "../audios/settings.mp3";
 import "./Interpretation.css";
+
+var timeout;
 
 function displayResponse(state, setState, response) {
     console.log(response);
@@ -60,11 +65,15 @@ function displayResponse(state, setState, response) {
             image: responseImage,
             text: responseText,
             backgroundColor: responseColor,
+            isDisplayOn: state.isDisplayOn,
+            isAudioOn: state.isAudioOn,
         });
     } else {
         setState({
             text: responseText,
-            backgroundColor: responseColor
+            backgroundColor: responseColor,
+            isDisplayOn: state.isDisplayOn,
+            isAudioOn: state.isAudioOn,
         });
     }
     
@@ -72,8 +81,11 @@ function displayResponse(state, setState, response) {
         audio.play();
     }
 
-    setTimeout(() => {
+    console.log("displayResponse State: ", state);
+
+    timeout = setTimeout(() => {
         setState({
+            view: state.view,
             image: waiting,
             text: 'Waiting for a response...',
             isDisplayOn: state.isDisplayOn,
@@ -83,13 +95,12 @@ function displayResponse(state, setState, response) {
 };
 
 function setViewToSettings(state, setState) {
-    // setState({
-    //     view: "settings",
-    // })
     var prevState = {state};
     prevState["view"] = "settings";
     setState(prevState);
     console.log(state);
+
+    clearTimeout(timeout);
 }
 
 const Interpretation = (props) => {
@@ -163,16 +174,19 @@ const Interpretation = (props) => {
 
     // const interpretEvery2Seconds = window.setInterval(interpretGesture, 1500);
 
-    console.log("interpretation render");
-    console.log(state.view == "settings");
-    console.log(state);
+    console.log("Interpretation State: ", state);
+
+    const [playBack] = useSound(back_audio);
+    const [playSettings] = useSound(settings_audio);
 
     return (
         <div>
-        { state.view != "settings" ?
+        { state.view == "settings" ?
+            <Settings setter={setState} parentState={state} />
+        :
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
-                <button class="goBackButton" onClick={() => history.push("/")}>← Go back</button>
-                <button id="settings" onClick={() => setViewToSettings(state, setState)}>⚙ Settings</button>
+                <button class="goBackButton" onMouseEnter={(() => playBack())} onClick={() => history.push("/")}>← Go back</button>
+                <button id="settings" onMouseEnter={(() => playSettings())} onClick={() => setViewToSettings(state, setState)}>⚙ Settings</button>
                 <h1 style={{backgroundColor: state.backgroundColor}}>Interpretation</h1>
                 <div className="center" style={{backgroundColor: state.backgroundColor}}>
                     <img class={state.image == undefined ? "hidden" : ""} style={{backgroundColor: state.backgroundColor}} src={state.image} alt="Logo"/>
@@ -185,8 +199,6 @@ const Interpretation = (props) => {
                     <button id="maybe" onClick={() => displayResponse(state, setState, 'maybe')}>maybe</button>
                 </div>
             </div>
-
-        :  <Settings setter={setState} parentState={state} />
         }
         </div>
     );

@@ -2,6 +2,9 @@ import React, { Component, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AddGesture from './AddGesture';
 import waiting from "../images/messages-typing.gif";
+import useSound from "use-sound";
+import back from "../audios/go_back.mp3";
+import addGesture from "../audios/add_gesture.mp3";
 
 import "./Calibration.css";
 
@@ -23,12 +26,20 @@ const Calibration = (props) => {
       view: "waiting",
       gestures: []
     });
+    const [playBack] = useSound(back);
+    const [playAdd] = useSound(addGesture);
 
     return (
       <div>
         { state.view == "waiting" ?
           <div className="waiting">
-            <button className="goBackButton" onClick={() => history.push("/")}>← Go back</button>
+            <button 
+            className="goBackButton" 
+            onMouseEnter={() => playBack()}
+            onClick={() => history.push("/")}>
+            ← Go back
+            </button>
+
             <h1>Calibration</h1>
             <div className="container">
               <img src={waiting} alt="Logo"/>
@@ -39,11 +50,22 @@ const Calibration = (props) => {
 
         : state.view === "calibrate"  ?
           <div>
-            <button className="goBackButton" onClick={() => history.push("/")}>← Go back</button>
+            <button
+            className="goBackButton" 
+            onMouseEnter={() => playBack()}
+            onClick={() => history.push("/")}>
+              ← Go back
+            </button>
+
             <h1>Calibration</h1>
             <h2>Select an existing gesture or add a new gesture:</h2>
             <br />
-            <button className="add" onClick={() => {changeView("add", state, setState)}}>Add Gesture +</button>
+            <button 
+            className="add" 
+            onMouseEnter={() => playAdd()}
+            onClick={() => {changeView("add", state, setState)}}>
+              Add Gesture +
+            </button>
             <br />
             <hr className="divide"/>
             <br />
