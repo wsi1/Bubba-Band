@@ -1,5 +1,8 @@
 import React, { Component, useState} from 'react';
 import { useHistory } from 'react-router-dom';
+import useSound from "use-sound";
+import back from "../audios/go_back.mp3";
+import addGesture from "../audios/add_gesture.mp3";
 
 import "./AddGesture.css";
 
@@ -44,10 +47,18 @@ const AddGesture = (props) => {
     const [state, setState] = useState({
       value: "",
     });
+    const [playBack] = useSound(back);
+    const [playAdd] = useSound(addGesture);
 
     return (
       <div className="addGesture">
-        <button className="goBackButton" onClick={() => goBack(props.parentState, props.setter)}>← Go back</button>
+        <button 
+        className="goBackButton" 
+        onMouseEnter={(() => playBack())}
+        onClick={() => goBack(props.parentState, props.setter)}>
+        ← Go back
+        </button>
+
         <h1> Create a new gesture </h1>
         <h2>Type in gesture name: </h2>
         <div className="form-center">
@@ -55,7 +66,7 @@ const AddGesture = (props) => {
               handleSubmit(e, state.value, props.setter, props.parentState)
             }}>
             <input type="text" autoFocus value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
-            <input type="submit" value="Add Gesture" />
+            <input type="submit" onMouseEnter={() => playAdd()} value="Add Gesture" />
           </form>
         </div>
       </div>
