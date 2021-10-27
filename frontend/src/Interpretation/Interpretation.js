@@ -179,6 +179,8 @@ const Interpretation = (props) => {
     const [playBack] = useSound(back_audio);
     const [playSettings] = useSound(settings_audio);
 
+    console.log("Gestures: ", props.existingGestures)
+
     return (
         <div>
         { state.view == "settings" ?

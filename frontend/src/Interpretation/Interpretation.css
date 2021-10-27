@@ -12,7 +12,7 @@ p {
 }
 
 .center {
-  margin-top: 5%;
+  /* margin-top: 5%; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -73,7 +73,7 @@ div > .responseText {
   background-color: green;
 }
 
-.container {
+.interpretationContainer {
   display: flex;
   height: 100%;
   flex-direction: column;
