@@ -3,7 +3,7 @@ from gpiozero import MCP3008
 import matplotlib
 import matplotlib.pyplot as plt
 
-from .peak_detection import real_time_peak_detection
+from peak_detection import real_time_peak_detection
 import time
 
 
