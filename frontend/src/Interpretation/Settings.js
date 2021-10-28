@@ -73,33 +73,36 @@ const Settings = (props) => {
       onClick={() => goBack(state, props.setter)}>
       ← Go back
       </button>
-      
-      <div class="content">
-        <div class="settings">
-          <p class="title">Display response</p>
-          <img src={displayImage} class="settingsImage" alt="TV screen"/>
-          <p class="descr">Display animations on screen</p>
-          <div class="buttonContainer">
-              <label class="switch">
-                <input type="checkbox" id="displayToggle" checked={state.isDisplayOn} onChange={() => updateDisplayToggle(state, setState)}/>
-                <span class="slider round"></span>
-              </label>
+      <div id="all">
+          <h1>Settings</h1>      
+          </div>
+          <div class="content">
+            <div class="settings">
+              <p class="title">Animations</p>
+              <p class="caption">When turned on, an animation will appear each time a gesture is made.</p>
+              <img src={displayImage} class="settingsImage" alt="TV screen"/>
+              <p class="descr">{state.isDisplayOn ? "Animations for gestures are ON" : "Animations for gestures are OFF"}</p>
+              <div class="buttonContainer">
+                  <label class="switch">
+                    <input type="checkbox" id="displayToggle" checked={state.isDisplayOn} onChange={() => updateDisplayToggle(state, setState)}/>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+            </div>
+            <div class="settings">
+              <p class="title">Audio Output</p>
+              <p class="caption">When turned on, audio of the interpreted response will play each time a gesture is made.</p>
+              <img src={volumeImage} class="settingsImage" alt="TV screen"/>
+              <p class="descr">{state.isAudioOn ? "Audio output for gestures is ON" : "Audio output for gestures is OFF"}</p>
+              <div class="buttonContainer">
+                <label class="switch">
+                  <input type="checkbox" id="audioToggle" checked={state.isAudioOn} onChange={() => updateAudioToggle(state, setState)}/>
+                  <span class="slider round"></span>
+                </label>
+              </div>
             </div>
         </div>
-        <div class="settings">
-          <p class="title">Auditory response</p>
-          <img src={volumeImage} class="settingsImage" alt="TV screen"/>
-          <p class="descr">Output response through speaker</p>
-          <div class="buttonContainer">
-            <label class="switch">
-              <input type="checkbox" id="audioToggle" checked={state.isAudioOn} onChange={() => updateAudioToggle(state, setState)}/>
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
       </div>
-      <h1>Settings</h1>
-    </div>
   );
 };
 

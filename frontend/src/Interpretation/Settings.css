@@ -1,18 +1,19 @@
 .content {
-  margin-top: 2%;
   position: absolute;
-  top: 50%;
+  top: 50vh;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   display: flex;
   align-content: center;
   justify-content: center;
-  width: 70vw;
+  height: 60vh;
+  width: auto;
+  margin: 10px;
 }
 
 .settings {
-  width: 100vw;
+  width: 50vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,7 +43,8 @@ p {
 }
 
 .title {
-  font-size: 28pt;
+  font-size: 24pt;
+  margin: 0px;
 }
 
 #on {
@@ -116,4 +118,13 @@ input:checked + .slider:before {
   height: 40%;
   width: auto;
   margin: 50px;
+}
+
+.caption {
+  font-size: medium;
+  width: 30vw;
+}
+
+#header {
+  margin: 10px;
 }
