@@ -15,9 +15,10 @@ h1, p {
   font-size: 5em;
 }
 
-p {
+p #home{
   padding-bottom: 3%;
   font-size: xx-large;
+  width: 30%;
 }
 
 .flex-container {
@@ -27,6 +28,7 @@ p {
   display: flex;
   padding: auto;
   margin: auto;
+  width: 100%;
 }
 
 /* .Home {
@@ -40,9 +42,13 @@ p {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-div > img {
+div >  #homeImage {
   height: 40vh;
   width: auto;
 }

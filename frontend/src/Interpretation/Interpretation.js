@@ -9,7 +9,6 @@ import wave from '../images/waving.gif'; // Tell webpack this JS file uses this 
 import maybe from '../images/maybe.gif'; // Tell webpack this JS file uses this image
 import come from '../images/come.gif';
 import yes_audio from '../audios/yes.mp3';
-import no_audio from '../audios/no.mp3';
 import come_audio from '../audios/come.mp3';
 import hi_audio from '../audios/hi.mp3';
 import maybe_audio from '../audios/maybe.mp3';
@@ -188,7 +187,7 @@ const Interpretation = (props) => {
         :
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
                 <button class="goBackButton" onMouseEnter={(() => playBack())} onClick={() => history.push("/")}>← Go back</button>
-                <button id="settings" onMouseEnter={(() => playSettings())} onClick={() => setViewToSettings(state, setState)}>⚙ Settings</button>
+                <button id="settings" onMouseEnter={(() => playSettings())} onClick={() => setViewToSettings(state, setState)}>Settings ⚙</button>
                 <h1 style={{backgroundColor: state.backgroundColor}}>Interpretation</h1>
                 <div className="center" style={{backgroundColor: state.backgroundColor}}>
                     <img class={state.image == undefined ? "hidden" : ""} style={{backgroundColor: state.backgroundColor}} src={state.image} alt="Logo"/>
