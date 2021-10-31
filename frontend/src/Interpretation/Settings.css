@@ -1,18 +1,23 @@
 .content {
-  margin-top: 2%;
   position: absolute;
-  top: 50%;
+  top: 50vh;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   display: flex;
   align-content: center;
   justify-content: center;
-  width: 70vw;
+  height: 60vh;
+  width: auto;
+  margin: 10px;
 }
 
 .settings {
-  width: 90%;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonContainer {
@@ -20,7 +25,6 @@
   align-content: center;
   justify-content: center;
   column-gap: 10px;
-  margin-top: 40px;
 }
 
 .settingsButton {
@@ -39,7 +43,8 @@ p {
 }
 
 .title {
-  font-size: 28pt;
+  font-size: 24pt;
+  margin: 0px;
 }
 
 #on {
@@ -107,4 +112,19 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.settingsImage {
+  height: 40%;
+  width: auto;
+  margin: 50px;
+}
+
+.caption {
+  font-size: medium;
+  width: 30vw;
+}
+
+#header {
+  margin: 10px;
 }

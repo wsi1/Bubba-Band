@@ -6,44 +6,50 @@ import addGesture from "../audios/add_gesture.mp3";
 
 import "./AddGesture.css";
 
-function handleSubmit(event, val, setState, state) {
-  event.preventDefault();
-  if (val === "") {
-    window.alert("Label can't be empty");
-    return false;
-  }
-  else {
-    var newState = state.gestures;
-    if (typeof newState === "undefined") {
-      newState = [val];
+//If it returns true, then the form is submitted. If false, then the form isn't submitted.
+function handleSubmit(event, val, setState, gestures) {
+    //Prevents it automically submitting even if this function returns false
+    event.preventDefault();
+    //If the user didn't enter anything for the label
+    if (val === "") {
+        window.alert("Label can't be empty");
+        return false;
     }
     else {
-      newState.push(val);
-    }
+        //To confirm that the value entered was the right one. 
     
-    setState({
-      view: "calibrate",
-      gestures: newState,
-    });
+        if (!window.confirm("Gesture just classfied as '" + val + "'. Click OK to confirm.")) {
+            return false;
+        }
 
-    return true;
-  }
-  
-}
+        var newState = gestures;
+        if (typeof newState === "undefined") {
+        newState = [val];
+        }
+        else {
+        newState.push(val);
+        }
+        
+        setState({
+        view: "waiting",
+        });
 
-function goBack(state, setState) {
-  setState( {
-    view: "calibrate",
-    gestures: state.gestures,
-  })
+        return true;
+    }
 }
 
 function handleChange(e, setState) {
   setState({value: e.target.value});
 }
 
+function handleBackPress(setState) {
+    setState({
+        view: "calibrate",
+    })
+}
+
+
 const AddGesture = (props) => {
-    const history = useHistory();
     const [state, setState] = useState({
       value: "",
     });
@@ -55,15 +61,15 @@ const AddGesture = (props) => {
         <button 
         className="goBackButton" 
         onMouseEnter={(() => playBack())}
-        onClick={() => goBack(props.parentState, props.setter)}>
+        onClick={() => handleBackPress(props.setter)}>
         ← Go back
         </button>
-
+          
         <h1> Create a new gesture </h1>
         <h2>Type in gesture name: </h2>
         <div className="form-center">
           <form onSubmit={(e, ) => {
-              handleSubmit(e, state.value, props.setter, props.parentState)
+              handleSubmit(e, state.value, props.setter, props.existingGestures)
             }}>
             <input type="text" autoFocus value={state.value} onChange={ (e) => {handleChange(e, setState)}} />
             <input type="submit" onMouseEnter={() => playAdd()} value="Add Gesture" />

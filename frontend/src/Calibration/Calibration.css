@@ -1,9 +1,13 @@
-h1, h2 {
+h1, h2, h3 {
     text-align: center;
 }
 
 h2 {
     padding: 20px;
+}
+
+div > h1 {
+    padding: 0px;
 }
 
 img {
@@ -15,23 +19,35 @@ img {
     border: 10px;
 }
 
+#instructions, #noExisting {
+    font-size: x-large;
+    margin: 20px;
+}
+
 hr.divide {
     width: 75%;
     margin-left: 12.5%;
-    margin-top: 50px;
+    margin-top: 70px;
     opacity: 1;
     border: 1px solid darkgrey;
-    
-    
-    
 }
 
 .calibrate {
     position: relative;
 }
+
+.waiting {
+    height: 100vh;
+    width: 100vw;
+}
+
 .add {
-    width: 75%;
+    width: 30%;
     height: auto;
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+    font-size: x-large;
     
     padding: 20px;
     margin-bottom: 30px;
@@ -53,12 +69,20 @@ hr.divide {
     color: white;
 }
 
-.container {
-    display: flex;
+.calibrationContainer {
+    /* display: flex; 
     height: 100%;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+
+    margin: 0;
+    position: absolute;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .temp {
@@ -66,13 +90,13 @@ hr.divide {
     left:    0;
     bottom:   0;
 }
+
 .smallHead {
     font-size: 28px;
     flex-basis: 50%; 
 }
 
 .gestures {
-    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -80,4 +104,6 @@ hr.divide {
     gap: 50px 30px;
 }
 
-
+.buttons {
+    margin-top: 40px;
+}
