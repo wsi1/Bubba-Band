@@ -4,6 +4,7 @@ import numpy as np
 class real_time_peak_detection:
     def __init__(self, array, lag, threshold, influence):
         self.y = list(array)
+        self.rng = np.random.default_rng()
         self.length = len(self.y)
         self.lag = lag
         self.threshold = threshold
@@ -16,11 +17,11 @@ class real_time_peak_detection:
         self.stdFilter[self.lag - 1] = np.std(self.y[0 : self.lag]).tolist()
 
     def thresholding_algo(self, new_value):
-        self.y.append(new_value)
+        self.y.append(new_value + self.rng.normal(0, 0.001))
         i = len(self.y) - 1
         self.length = len(self.y)
         if i < self.lag:
-            return 0
+            return 0, self.y
         elif i == self.lag:
             self.signals = [0] * len(self.y)
             self.filteredY = np.array(self.y).tolist()
@@ -28,7 +29,7 @@ class real_time_peak_detection:
             self.stdFilter = [0] * len(self.y)
             self.avgFilter[self.lag] = np.mean(self.y[0 : self.lag]).tolist()
             self.stdFilter[self.lag] = np.std(self.y[0 : self.lag]).tolist()
-            return 0
+            return 0, self.y
 
         self.signals += [0]
         self.filteredY += [0]
@@ -56,5 +57,4 @@ class real_time_peak_detection:
             self.avgFilter[i] = np.mean(self.filteredY[(i - self.lag) : i])
             self.stdFilter[i] = np.std(self.filteredY[(i - self.lag) : i])
 
-        print(f"{self.y[i]}, {self.signals[i]}")
-        return self.signals[i]
+        return self.signals[i], self.y[-30:]
