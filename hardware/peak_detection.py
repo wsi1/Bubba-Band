@@ -39,26 +39,35 @@ class real_time_peak_detection:
         self.stdFilter += [0]
 
         return_peak_data = 0
+        if self.peak_found:
+            self.count += 1
+            if self.count == 30:
+                return_peak_data = 1
+                self.signals[i] = 1
+                self.peak_found = False
+                self.count = 0
 
         if (
             abs(self.y[i] - self.avgFilter[i - 1])
             > self.threshold * self.stdFilter[i - 1]
         ):
-            if self.peak_found and self.count == 30:
-                # self.signals[i] = 1
-                return_peak_data = 1
-                self.signals[i] = 0
-                self.peak_found = False
-                self.count = 0
-            elif self.y[i] > self.avgFilter[i - 1]:
+            print(self.peak_found, self.count, self.y[i])
+#             if self.peak_found and self.count == 30:
+#                 # self.signals[i] = 1
+#                 return_peak_data = 1
+#                 print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+#                 self.signals[i] = 1
+#                 self.peak_found = False
+#                 self.count = 0
+            if self.y[i] > self.avgFilter[i - 1]:
                 self.signals[i] = 1
                 # self.signals[i] = 0
-                self.count += 1
+                #self.count += 1
                 self.peak_found = True
             else:
                 self.signals[i] = -1
                 # self.signals[i] = 0
-                self.count += 1
+                #self.count += 1
                 self.peak_found = True
 
             self.filteredY[i] = (
@@ -73,4 +82,4 @@ class real_time_peak_detection:
             self.avgFilter[i] = np.mean(self.filteredY[(i - self.lag) : i])
             self.stdFilter[i] = np.std(self.filteredY[(i - self.lag) : i])
 
-        return self.signals[i], self.y[-60:]
+        return return_peak_data, self.y[-60:]

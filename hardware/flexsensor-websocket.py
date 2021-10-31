@@ -47,7 +47,7 @@ def gestures():
     while True:
         signals, array = peak_detector.thresholding_algo(flex.value)
         gesture_id = uuid.uuid4().hex
-        if signals == -1:
+        if signals == 1:
             yield array, gesture_id
         time.sleep(1 / samples_per_second)
 
@@ -80,4 +80,4 @@ def connect():
     for array, gesture_id in gestures():
         process_gesture(array, gesture_id)
 
-sio.connect("http://15c3-35-2-150-10.ngrok.io")
+sio.connect("http://a5a5-35-3-37-142.ngrok.io")
