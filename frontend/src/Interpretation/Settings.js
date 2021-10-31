@@ -1,16 +1,25 @@
 import React, { Component, useState} from 'react';
 import { useHistory } from 'react-router-dom';
-import waiting from '../images/messages-typing.gif'; // Tell webpack this JS file uses this image
-import useSound from "use-sound";
+
+// audios
 import back_audio from "../audios/go_back.mp3";
+import settings_audio from "../audios/settings.mp3";
+import animations_audio from "../audios/animations.mp3";
+import audio_output_audio from "../audios/audio_output.mp3";
+
+// images
+import waiting from '../images/messages-typing.gif'; // Tell webpack this JS file uses this image
 import displayImage from "../images/display.png"
 import volumeImage from "../images/volume.png"
 
 import "./Settings.css";
 
 let goBackAudio = new Audio(back_audio);
+let settingsAudio = new Audio(settings_audio);
+let animationsAudio = new Audio(animations_audio);
+let audioOutputAudio = new Audio(audio_output_audio);
 
-let allAudios = [goBackAudio];
+let allAudios = [goBackAudio, settingsAudio, animationsAudio, audioOutputAudio];
 
 function goBack(state, setState) {
   setState({
@@ -22,7 +31,7 @@ function goBack(state, setState) {
     isDisplayOn: state.isDisplayOn,
     isAudioOn: state.isAudioOn,
     image: waiting,
-    text: 'Waiting for a response...'
+    text: 'Waiting for a gesture to be made ...'
   });
 }
 
@@ -74,32 +83,37 @@ const Settings = (props) => {
       ← Go back
       </button>
       <div id="all">
-          <h1>Settings</h1>      
+          <h1
+            onMouseEnter={() => playAudio(settingsAudio)}>
+            Settings
+          </h1>      
           </div>
           <div class="content">
-            <div class="settings">
-              <p class="title">Animations</p>
-              <p class="caption">When turned on, an animation will appear each time a gesture is made.</p>
-              <img src={displayImage} class="settingsImage" alt="TV screen"/>
-              <p class="descr">{state.isDisplayOn ? "Animations for gestures are ON" : "Animations for gestures are OFF"}</p>
-              <div class="buttonContainer">
+            <div class="settings"
+              onMouseEnter={() => playAudio(animationsAudio)}>
+                <p class="title">Animations</p>
+                <p class="caption">When turned on, an animation will appear each time a gesture is made.</p>
+                <img src={displayImage} class="settingsImage" alt="TV screen"/>
+                <p class="descr">{state.isDisplayOn ? "Animations for gestures are ON" : "Animations for gestures are OFF"}</p>
+                <div class="buttonContainer">
                   <label class="switch">
                     <input type="checkbox" id="displayToggle" checked={state.isDisplayOn} onChange={() => updateDisplayToggle(state, setState)}/>
                     <span class="slider round"></span>
                   </label>
                 </div>
             </div>
-            <div class="settings">
-              <p class="title">Audio Output</p>
-              <p class="caption">When turned on, audio of the interpreted response will play each time a gesture is made.</p>
-              <img src={volumeImage} class="settingsImage" alt="TV screen"/>
-              <p class="descr">{state.isAudioOn ? "Audio output for gestures is ON" : "Audio output for gestures is OFF"}</p>
-              <div class="buttonContainer">
-                <label class="switch">
-                  <input type="checkbox" id="audioToggle" checked={state.isAudioOn} onChange={() => updateAudioToggle(state, setState)}/>
-                  <span class="slider round"></span>
-                </label>
-              </div>
+            <div class="settings"
+              onMouseEnter={() => playAudio(audioOutputAudio)}>
+                <p class="title">Audio</p>
+                <p class="caption">When turned on, audio of the interpreted response will play each time a gesture is made.</p>
+                <img src={volumeImage} class="settingsImage" alt="TV screen"/>
+                <p class="descr">{state.isAudioOn ? "Audio for gestures is ON" : "Audio for gestures is OFF"}</p>
+                <div class="buttonContainer">
+                  <label class="switch">
+                    <input type="checkbox" id="audioToggle" checked={state.isAudioOn} onChange={() => updateAudioToggle(state, setState)}/>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
             </div>
         </div>
       </div>

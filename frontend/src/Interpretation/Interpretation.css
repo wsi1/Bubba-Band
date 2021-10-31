@@ -1,20 +1,25 @@
+div > h1 {
+  width: fit-content;
+}
+
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 15px;
-  width: 50%;
+  height: 50vh;
+  width: auto;
   border: 10px;
 }
 
 p {
-  font-size: xx-large;
+  font-size: 2.5em;
 }
 
 .center {
   /* margin-top: 5%; */
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -47,7 +52,7 @@ p {
 }
 
 .hidden {
-  opacity: 0;
+  display: none;
 }
 
 div > .responseText {
