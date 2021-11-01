@@ -112,3 +112,7 @@ hr.divide {
 #gestureButton {
     margin: 15px;
 }
+
+#skip {
+    width: fit-content;
+}
