@@ -10,10 +10,11 @@
   height: 60vh;
   width: auto;
   margin: 10px;
+  column-gap: 10vw;
 }
 
 .settings {
-  width: 50vw;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,8 +34,9 @@
 }
 
 .descr {
-  font-size: 16pt;
+  font-size: 1.3vw;
   padding-top: 0px;
+  margin-bottom: 30px;
 }
 
 p {
@@ -43,7 +45,8 @@ p {
 }
 
 .title {
-  font-size: 24pt;
+  text-decoration: underline;
+  font-size: 1.5vw;
   margin: 0px;
 }
 
@@ -121,7 +124,7 @@ input:checked + .slider:before {
 }
 
 .caption {
-  font-size: medium;
+  font-size: 1.3vw;
   width: 30vw;
 }
 

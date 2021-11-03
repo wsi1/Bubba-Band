@@ -1,23 +1,25 @@
+// necessary imports and style
 import React, { Component, useState } from "react";
-import { Button } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import useSound from 'use-sound';
+import "./Home.css";
+
+// audios
 import calibration from "../audios/calibration.mp3";
 import interpretation from "../audios/interpretation.mp3";
 import selectMode from "../audios/select_mode_below.mp3";
 import welcome from "../audios/welcome.mp3"
 import frogs from "../images/frog.gif"
-import "./Home.css";
 
 function setViewToSettings(state, setState) {
 
 }
 
+// audios
 let calibrationAudio = new Audio(calibration);
 let interpretationAudio = new Audio(interpretation);
 let selectModeAudio = new Audio(selectMode);
 let welcomeAudio = new Audio(welcome);
-
 let allAudios = [calibrationAudio, interpretationAudio, selectModeAudio, welcomeAudio];
 
 function playAudio(audio) {

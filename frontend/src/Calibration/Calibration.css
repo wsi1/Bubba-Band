@@ -42,12 +42,12 @@ hr.divide {
 }
 
 .add {
-    width: 30%;
+    width: fit-content;
     height: auto;
     margin-top: 30px;
     margin-bottom: 15px;
 
-    font-size: x-large;
+    font-size: 1.5em;
     
     padding: 20px;
     margin-bottom: 30px;
@@ -102,8 +102,17 @@ hr.divide {
     justify-content: center;
     align-items: flex-start;
     gap: 50px 30px;
+    font-size: 1.5em;
 }
 
 .buttons {
-    margin-top: 40px;
+    margin: 40px;
+}
+
+#gestureButton {
+    margin: 15px;
+}
+
+#skip {
+    width: fit-content;
 }
