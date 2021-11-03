@@ -6,7 +6,6 @@ import { SocketContext, socket } from './context/socket';
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log("hello", props);
     this.state = {}
   }
   

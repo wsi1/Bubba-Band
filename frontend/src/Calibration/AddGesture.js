@@ -2,10 +2,31 @@ import React, { Component, useState, useEffect, useContext } from 'react';
 import { socket, SocketContext } from '../context/socket';
 import { useHistory } from 'react-router-dom';
 import useSound from "use-sound";
+import "./AddGesture.css";
+
+// audios
 import back from "../audios/go_back.mp3";
 import addGesture from "../audios/add_gesture.mp3";
 
-import "./AddGesture.css";
+let goBackAudio = new Audio(back);
+let addGestureAudio = new Audio(addGesture);
+let allAudios = [goBackAudio, addGestureAudio];
+
+let hoverIsOn = true;
+
+function playAudio(audio) {
+  if (hoverIsOn) {
+      // if the mouse moves to another element before the previous sound finishes,
+      // stop the previous sound before playing the new sound
+      // this is to prevent sounds from overlapping one another with quick mouse movement
+      allAudios.forEach(function(a) {
+      a.pause();
+      a.currentTime = 0;
+      })
+
+      audio.play();
+  }
+}
 
 //If it returns true, then the form is submitted. If false, then the form isn't submitted.
 function handleSubmit(event, val, setState, gestures, uuid) {
@@ -60,12 +81,17 @@ function handleBackPress(setState) {
 }
 
 const AddGesture = (props) => {
+  console.log("prop ", props);
+  
+
   const [state, setState] = useState({
     uuid: props.parentState.uuid,
     value: "",
   });
   const [playBack] = useSound(back);
   const [playAdd] = useSound(addGesture);
+
+  hoverIsOn = props.hover;
 
   console.log("AddGesture state: ", state);
 
@@ -75,7 +101,7 @@ const AddGesture = (props) => {
     <div className="addGesture">
       <button
         className="goBackButton"
-        onMouseEnter={(() => playBack())}
+        onMouseEnter={() => playAudio(goBackAudio)}
         onClick={() => handleBackPress(props.setter)}>
         ← Go back
       </button>
@@ -87,7 +113,7 @@ const AddGesture = (props) => {
           handleSubmit(e, state.value, props.setter, props.existingGestures, state.uuid)
         }}>
           <input type="text" autoFocus value={state.value} onChange={(e) => { handleChange(e, setState, state.uuid) }} />
-          <input type="submit" onMouseEnter={() => playAdd()} value="Add Gesture" />
+          <input type="submit" onMouseEnter={() => playAudio(addGestureAudio)} value="Add Gesture" />
         </form>
       </div>
     </div>

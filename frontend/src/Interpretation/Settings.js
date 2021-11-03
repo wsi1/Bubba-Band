@@ -21,6 +21,8 @@ let audioOutputAudio = new Audio(audio_output_audio);
 
 let allAudios = [goBackAudio, settingsAudio, animationsAudio, audioOutputAudio];
 
+let hoverIsOn = true;
+
 function goBack(state, setState) {
   setState({
     backgroundColor: '#1c1c1c',
@@ -59,12 +61,14 @@ function playAudio(audio) {
   // if the mouse moves to another element before the previous sound finishes,
   // stop the previous sound before playing the new sound
   // this is to prevent sounds from overlapping one another with quick mouse movement
-  allAudios.forEach(function(a) {
-    a.pause();
-    a.currentTime = 0;
-  })
+  if(hoverIsOn) {
+    allAudios.forEach(function(a) {
+      a.pause();
+      a.currentTime = 0;
+    })
 
-  audio.play();
+    audio.play();
+  }
 }
 
 
@@ -72,7 +76,9 @@ const Settings = (props) => {
   const history = useHistory();
   const [state, setState] = useState(props.parentState.state);
 
-  console.log("Settings State: ", state);
+  console.log(props.hover);
+
+  hoverIsOn = props.hover;
 
   return (
     <div>

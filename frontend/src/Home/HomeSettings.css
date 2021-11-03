@@ -11,8 +11,10 @@
     width: 70vw;
   }
   
-  .settings {
-    width: 90%;
+  .homeSettings {
+    position: absolute;
+    top: 40%;
+    left: 40%;
   }
   
   .buttonContainer {

@@ -25,6 +25,8 @@ import "./Interpretation.css";
 
 var timeout;
 
+let hoverIsOn = true;
+
 // audios
 let yesAudio = new Audio(yes_audio);
 let comeAudio = new Audio(come_audio);
@@ -125,18 +127,23 @@ function setViewToSettings(state, setState) {
 }
 
 function playAudio(audio) {
-    // if the mouse moves to another element before the previous sound finishes,
-    // stop the previous sound before playing the new sound
-    // this is to prevent sounds from overlapping one another with quick mouse movement
-    allAudios.forEach(function(a) {
-      a.pause();
-      a.currentTime = 0;
-    })
-  
-    audio.play();
+    if (hoverIsOn) {
+        // if the mouse moves to another element before the previous sound finishes,
+        // stop the previous sound before playing the new sound
+        // this is to prevent sounds from overlapping one another with quick mouse movement
+        allAudios.forEach(function(a) {
+        a.pause();
+        a.currentTime = 0;
+        })
+
+        audio.play();
+    }
 }
 
 const Interpretation = (props) => {
+    console.log("prop: ", props.parentState);
+    hoverIsOn = props.parentState.hover;
+
     const socket = useContext(SocketContext);
     let currGesture = ""
     let numCurrGesture = 0
@@ -204,14 +211,12 @@ const Interpretation = (props) => {
         numCurrGesture = 0;
     }
 
-    console.log("Interpretation State: ", state);
-
-    console.log("Gestures: ", props.existingGestures)
+    console.log("Interpretation props: ", props);
 
     return (
         <div>
         { state.view == "settings" ?
-            <Settings setter={setState} parentState={state} />
+            <Settings setter={setState} parentState={state} hover={props.parentState.hover} />
         :
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
                 <button class="goBackButton" 

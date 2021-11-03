@@ -23,16 +23,18 @@ let skipAudio = new Audio(skip_audio);
 
 let allAudios = [backAudio, addGestureAudio, calibrationAudio, waitingAudio, skipAudio];
 
-function playAudio(audio) {
+function playAudio(audio, hover) {
     // if the mouse moves to another element before the previous sound finishes,
     // stop the previous sound before playing the new sound
     // this is to prevent sounds from overlapping one another with quick mouse movement
-    allAudios.forEach(function(a) {
-      a.pause();
-      a.currentTime = 0;
-    })
-  
-    audio.play();
+    if (hover) {
+        allAudios.forEach(function(a) {
+        a.pause();
+        a.currentTime = 0;
+        })
+    
+        audio.play();
+    }
 }
 
 function changeView(nextState, curState, setState, uuid) {
@@ -69,6 +71,10 @@ function handleSubmit(socket, val, state, setState) {
 }
 
 const Calibration = (props) => {
+    console.log("prop: ", props.parentState);
+
+    let hover = props.parentState.hover;
+
     const history = useHistory();
     const [state, setState] = useState({
         view: "waiting",
@@ -112,18 +118,18 @@ const Calibration = (props) => {
                 <div className="waiting">
                     <button
                         className="goBackButton"
-                        onMouseEnter={() => playAudio(backAudio)}
+                        onMouseEnter={() => playAudio(backAudio, hover)}
                         onClick={() => history.push("/")}>
                         ← Go back
                     </button>
 
                     <h1
-                        onMouseEnter={() => playAudio(calibrationAudio)}>
+                        onMouseEnter={() => playAudio(calibrationAudio, hover)}>
                         Calibration
                     </h1>
                     <div className="calibrationContainer">
                         <img src={waiting} alt="Logo" />
-                        <p onMouseEnter={() => playAudio(waitingAudio)}
+                        <p onMouseEnter={() => playAudio(waitingAudio, hover)}
                             > Waiting for a gesture to be made ... 
                         </p>
                     </div>
@@ -134,7 +140,7 @@ const Calibration = (props) => {
                     <div>
                         <button
                             className="goBackButton" id="skip"
-                            onMouseEnter={() => playAudio(skipAudio)}
+                            onMouseEnter={() => playAudio(skipAudio, hover)}
                             onClick={() => handleBackPress(setState)}>
                             ← Skip gesture label
                         </button>
@@ -144,7 +150,7 @@ const Calibration = (props) => {
                         <div class="buttons">
                             <button
                                 className="add"
-                                onMouseEnter={() => playAudio(addGestureAudio)}
+                                onMouseEnter={() => playAudio(addGestureAudio, hover)}
                                 onClick={() => { changeView("add", state, setState, state.uuid) }}>
                                 Add Gesture
                             </button>
@@ -172,7 +178,7 @@ const Calibration = (props) => {
                         <br />
                     </div>
                     :
-                    <AddGesture setter={setState} parentState={state} existingGestures={props.existingGestures} />
+                    <AddGesture setter={setState} parentState={state} existingGestures={props.existingGestures} hover={props.parentState.hover} />
             }
         </div>
     );

@@ -11,6 +11,7 @@
   width: auto;
   margin: 10px;
   column-gap: 10vw;
+  margin-top: 40px;
 }
 
 .settings {
@@ -120,7 +121,7 @@ input:checked + .slider:before {
 .settingsImage {
   height: 40%;
   width: auto;
-  margin: 50px;
+  margin: 20px;
 }
 
 .caption {
