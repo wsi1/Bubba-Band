@@ -52,7 +52,6 @@ def load_model_from_file(file_ptr):
     # label count   mean    m2
     m = {}
     def parse_line(line):
-        print(line)
         parts = line.strip().split("\t")
         return parts[0], int(parts[1]), np.array(eval(parts[2])), np.array(eval(parts[3]))
     file_ptr.seek(0)
@@ -69,7 +68,6 @@ model_file = open("./model.tsv", "a+")
 model = load_model_from_file(model_file)
 
 def write_model_to_file(file_ptr, m):
-    print(m)
     file_ptr.seek(0)
     for key, row in m.items():
         line = "\t".join([str(x) for x in [key, row["count"], list(row["mean"]), list(row["m2"])]])
@@ -79,7 +77,7 @@ def write_model_to_file(file_ptr, m):
 
 def gestures():
     print("listening for gestures")
-    peak_detector = real_time_peak_detection([0.5] * buflen, 30, 10, 0.5)
+    peak_detector = real_time_peak_detection([0.5] * buflen, 7, 10, 0.5)
     while True:
         signals, array = peak_detector.thresholding_algo(flex.value)
         if signals == 1:
@@ -112,7 +110,7 @@ def update_model(data, label):
         label_model = {
             "count": 1,
             "mean": np.array(data["data"]),
-            "m2": np.ones(60) * 0.000001 ** 2
+            "m2": np.ones(60) * 1e-20
         }
         model[label] = label_model
     else:
@@ -128,17 +126,16 @@ def update_model(data, label):
             "m2": m2
         }
         model[label] = label_model
-    write_model_to_file(model_file, model)
+    # write_model_to_file(model_file, model)
     return model
 
 
 def infer_gesture(data):
-    print(model)
     if len(model) == 0:
         return None
     liks = []
     for lm in model.values():
-        mean, variance = lm["mean"], lm["m2"] / lm["count"]
+        mean, variance = lm["mean"], np.ones(60) * 1e-6 # lm["m2"] / lm["count"]
         lik = stats.multivariate_normal.pdf(data, mean, np.sqrt(variance))
         liks.append(lik)
     print(np.array(liks))
@@ -150,7 +147,7 @@ def send_gesture(gesture, gesture_id):
     print(gesture)
     sio.emit("raspberry", {"gesture": gesture, "uuid": gesture_id})
 
-@debounce(0.3)
+@debounce(0.2)
 def add_to_queue(type1, array, uuid = None):
     data_queue.put({"type": type1, "data": array, "uuid": uuid})
 
