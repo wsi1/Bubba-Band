@@ -1,11 +1,15 @@
+div > h1 {
+  width: max-content;
+  font-weight: bold;
+  font-size: 4em;
+}
+
 .homeButton {
   padding: 20px;
-  width: 15%;
   font-size: x-large;
 }
 
 h1, p {
-  padding: 25px;
   margin: auto;
   text-align: center;
 }
@@ -13,6 +17,8 @@ h1, p {
 .Home > .lander > h1 {
   /* padding-top: 3%; */
   font-size: 5em;
+  padding: 25px;
+  font-weight: bold;
 }
 
 p #home{
@@ -27,13 +33,11 @@ p #home{
   align-content: center;
   display: flex;
   padding: auto;
-  margin: auto;
+  margin: auto auto 10px auto;
   width: 100%;
 }
 
 .lander {
-  width: 100vw;
-  height: 80vh;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -41,11 +45,36 @@ p #home{
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: space-between;
+  align-content: stretch;
 }
 
 div >  #homeImage {
   height: 40vh;
   width: auto;
+}
+
+body:not(h1, h2, h3) {
+  font-family: "OpenSans";
+  font-weight: normal;
+}
+
+h1, h2, h3 {
+  font-family: "OpenSans";
+  font-weight: bold;
+}
+
+#settingsGear img {
+  height: 12vh;
+  background-color: transparent;
+}
+
+#settingsGear {
+  border: none;
+  position: absolute;
+  background-color: transparent;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
 }

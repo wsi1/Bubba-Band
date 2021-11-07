@@ -1,7 +1,3 @@
-div > h1 {
-  width: fit-content;
-}
-
 img {
   display: block;
   margin-left: auto;
@@ -13,7 +9,7 @@ img {
 }
 
 p {
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .center {
@@ -64,7 +60,6 @@ div > .responseText {
   float: right;
   margin-top: 15px;
   margin-right: 20px;
-  width: 10%;
   line-height: 5px;
   z-index: 10;
 }
@@ -88,4 +83,8 @@ div > .responseText {
 
 .hidden {
   display: none;
+}
+
+#interpretHeader {
+  margin-top: 20px;
 }

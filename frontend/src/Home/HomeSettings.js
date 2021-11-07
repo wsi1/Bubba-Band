@@ -1,6 +1,8 @@
 import React, { Component, useState, setState } from 'react';
 import "./HomeSettings.css";
 
+import sound_icon from "../images/volume-up-solid.svg";
+import noSound_icon from "../images/volume-mute-solid.svg";
 import settings_audio from "../audios/settings.mp3";
 import back_audio from "../audios/go_back.mp3";
 
@@ -56,8 +58,18 @@ const HomeSettings = (props) => {
       </button>
       
       <div class="homeSettings">
-        <p class="title">Auditory response</p>
-        <p class="descr">Output response through speaker</p>
+        <p class="descr">Play audio when mouse hovers over text</p>
+
+        {state.hover ? 
+        <div>
+          <img className="icon" src={sound_icon} alt="Sound Icon" /> 
+        </div>
+        :
+        <div>
+          <img className="icon" src={noSound_icon} alt="No Sound Icon" />
+        </div>
+        }
+        <p class="descr">{state.hover ? "Hover audio is ON" : "Hover audio is OFF"}</p>
         <div class="buttonContainer">
           <label class="switch">
             <input type="checkbox" id="hoverToggle" checked={state.hover} onChange={() => updateHoverToggle(props.parentState, setState)}/>
@@ -66,7 +78,7 @@ const HomeSettings = (props) => {
         </div>
       </div>
       
-      <h1
+      <h1 id="settingsHeader"
         onMouseEnter={() => playAudio(settingsAudio, state.hover)}>
           Settings
       </h1>

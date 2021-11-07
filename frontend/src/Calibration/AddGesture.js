@@ -6,7 +6,7 @@ import "./AddGesture.css";
 
 // audios
 import back from "../audios/go_back.mp3";
-import addGesture from "../audios/add_gesture.mp3";
+import addGesture from "../audios/add.mp3";
 
 let goBackAudio = new Audio(back);
 let addGestureAudio = new Audio(addGesture);
@@ -106,14 +106,16 @@ const AddGesture = (props) => {
         ← Go back
       </button>
 
-      <h1> Create a new gesture </h1>
-      <h2>Type in gesture name: </h2>
+      <h1>Add Gesture</h1>
       <div className="form-center">
+        <p>Type in a new gesture label below.</p>
         <form onSubmit={(e) => {
           handleSubmit(e, state.value, props.setter, props.existingGestures, state.uuid)
         }}>
-          <input type="text" autoFocus value={state.value} onChange={(e) => { handleChange(e, setState, state.uuid) }} />
-          <input type="submit" onMouseEnter={() => playAudio(addGestureAudio)} value="Add Gesture" />
+          <div id="formAndButton">
+            <input type="text" autoFocus value={state.value} onChange={(e) => { handleChange(e, setState, state.uuid) }} />
+            <input type="submit" onMouseEnter={() => playAudio(addGestureAudio)} value="Add" />
+          </div>
         </form>
       </div>
     </div>

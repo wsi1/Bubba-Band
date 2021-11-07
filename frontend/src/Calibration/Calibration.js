@@ -146,7 +146,7 @@ const Calibration = (props) => {
                         </button>
 
                         <h1>Gesture needs a label!</h1>
-                        <p id="instructions">To label the gesture, click "Add Gesture" to make a new gesture label or select an existing gesture below.</p>
+                        <p id="instructions">Click "Add Gesture" to make a new gesture label or select an existing gesture below.</p>
                         <div class="buttons">
                             <button
                                 className="add"

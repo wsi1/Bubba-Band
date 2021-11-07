@@ -47,7 +47,7 @@ hr.divide {
     margin-top: 30px;
     margin-bottom: 15px;
 
-    font-size: 1.5em;
+    font-size: 1.2em;
     
     padding: 20px;
     margin-bottom: 30px;
@@ -102,7 +102,7 @@ hr.divide {
     justify-content: center;
     align-items: flex-start;
     gap: 50px 30px;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .buttons {
