@@ -40,7 +40,7 @@ button:hover:not(#settingsGear, .goBackButton) {
   border: none;
   position: absolute;
   background-color: transparent;
-  top: 5px;
+  top: -10px;
   left: 5px;
   z-index: 1;
   background-color: transparent;
@@ -48,7 +48,8 @@ button:hover:not(#settingsGear, .goBackButton) {
 }
 
 .goBackButton img {
-  height: 12vh;
+  height: 15vh;
+  width: 15vh;
   background-color: transparent;
 }
 

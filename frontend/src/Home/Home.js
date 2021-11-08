@@ -114,7 +114,8 @@ const Home = (props) => {
                       Interpretation
                     </button>
                   </div>
-                </div> // lander
+                  {/* end of lander */}
+                </div> 
               </div>
             }
         </div>

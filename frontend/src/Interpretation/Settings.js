@@ -8,13 +8,13 @@ import animations_audio from "../audios/animations.mp3";
 import audio_output_audio from "../audios/audio_output.mp3";
 
 // images
-import waiting from '../images/messages-typing.gif'; // Tell webpack this JS file uses this image
-import displayImage from "../images/display.png";
-import volumeImage from "../images/volume.png";
+import waiting from '../images/messages-typing.gif'; 
 import soundIcon from "../images/volume-up-solid.svg";
 import noSoundIcon from "../images/volume-mute-solid.svg";
 import displayIcon from "../images/eye-solid.svg";
 import noDisplayIcon from "../images/eye-slash-solid.svg";
+import arrow from "../images/arrow.png"
+import arrowHover from "../images/arrow_hover.png"
 
 import "./Settings.css";
 
@@ -75,6 +75,19 @@ function playAudio(audio) {
   }
 }
 
+function handleArrowHover(state, setState, mouseEnter) {
+  playAudio(goBackAudio);
+  changeArrow(state, setState, mouseEnter);
+}
+
+function changeArrow(state, setState, mouseEnter) {
+  setState({
+    view: state.view,
+    isDisplayOn: state.isDisplayOn,
+    isAudioOn: state.isAudioOn,
+    displayHoverArrow: mouseEnter
+  });
+}
 
 const Settings = (props) => {
   const history = useHistory();
@@ -86,11 +99,11 @@ const Settings = (props) => {
 
   return (
     <div>
-      <button 
-      class="goBackButton" 
-      onMouseEnter={() => playAudio(goBackAudio)}
-      onClick={() => goBack(state, props.setter)}>
-      ← Go back
+      <button class="goBackButton" 
+          onMouseEnter={() => handleArrowHover(state, setState, true)}
+          onMouseLeave={() => changeArrow(state, setState, false)} 
+          onClick={() => goBack(state, props.setter)}>
+          <img src={state.displayHoverArrow ? arrowHover : arrow} />
       </button>
       <div id="all">
           <h1
