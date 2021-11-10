@@ -86,7 +86,7 @@ const Home = (props) => {
                     <img src={state.displayHoverGear ? gearHover : gear} />
                   </button> 
                 <div className="lander">
-                  <h1
+                  <h1 id="homeTitle"
                     onMouseEnter={() => playAudio(welcomeAudio)}>
                     Welcome to Bubba Band!
                   </h1>

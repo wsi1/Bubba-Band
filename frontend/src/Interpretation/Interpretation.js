@@ -156,7 +156,7 @@ function playAudio(audio) {
     }
 }
 
-function handleClick(state, setState, button, mouseEnter) {
+function handleHover(state, setState, button, mouseEnter) {
     if (button == 'settings') {
         playAudio(settingsAudio);
         changeGear(state, setState);
@@ -287,14 +287,14 @@ const Interpretation = (props) => {
         :
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
                 <button class="goBackButton" 
-                    onMouseEnter={() => handleClick(state, setState, 'goBack', true)}
+                    onMouseEnter={() => handleHover(state, setState, 'goBack', true)}
                     onMouseLeave={() => changeArrow(state, setState, false)} 
                     onClick={() => history.push("/")}>
                     <img src={state.displayHoverArrow ? arrowHover : arrow} />
                 </button>
 
                 <button id="settings" id="settingsGear" 
-                    onMouseEnter={() => handleClick(state, setState, 'settings')}
+                    onMouseEnter={() => handleHover(state, setState, 'settings')}
                     onMouseLeave={() => changeGear(state, setState)}
                     onClick={() => setViewToSettings(state, setState)}>
                     <img src={state.displayHoverGear ? gearHover : gear} />

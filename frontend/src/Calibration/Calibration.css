@@ -116,3 +116,7 @@ hr.divide {
 #skip {
     width: fit-content;
 }
+
+#content {
+    margin-top: 6vh;
+}
