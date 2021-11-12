@@ -13,7 +13,7 @@ export default class Routes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gestures: [],
+            gestures: ["Hard tap", "Soft tap"],
             hover: true
         };
     }

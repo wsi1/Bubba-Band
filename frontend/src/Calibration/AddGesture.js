@@ -4,13 +4,19 @@ import { useHistory } from 'react-router-dom';
 import useSound from "use-sound";
 import "./AddGesture.css";
 
+// images
+import arrow from "../images/arrow.png"
+import arrowHover from "../images/arrow_hover.png"
+
 // audios
 import back from "../audios/go_back.mp3";
-import addGesture from "../audios/add.mp3";
+import add from "../audios/add.mp3";
+import addGesture from "../audios/add_gesture.mp3";
 
 let goBackAudio = new Audio(back);
+let addAudio = new Audio(add);
 let addGestureAudio = new Audio(addGesture);
-let allAudios = [goBackAudio, addGestureAudio];
+let allAudios = [goBackAudio, addAudio, addGestureAudio];
 
 let hoverIsOn = true;
 
@@ -80,6 +86,20 @@ function handleBackPress(setState) {
   })
 }
 
+function handleArrowHover(state, setState, mouseEnter) {
+  console.log('here');
+  playAudio(goBackAudio);
+  changeArrow(state, setState, mouseEnter);
+}
+
+function changeArrow(state, setState, mouseEnter) {
+  setState({
+      view: state.view,
+      uuid: state.uuid,
+      displayHoverArrow: mouseEnter
+  });
+}
+
 const AddGesture = (props) => {
   console.log("prop ", props);
   
@@ -87,7 +107,9 @@ const AddGesture = (props) => {
   const [state, setState] = useState({
     uuid: props.parentState.uuid,
     value: "",
+    displayHoverArrow: false,
   });
+
   const [playBack] = useSound(back);
   const [playAdd] = useSound(addGesture);
 
@@ -101,12 +123,16 @@ const AddGesture = (props) => {
     <div className="addGesture">
       <button
         className="goBackButton"
-        onMouseEnter={() => playAudio(goBackAudio)}
+        onMouseEnter={() => handleArrowHover(state, setState, true)}
+        onMouseLeave={() => changeArrow(state, setState, false)}
         onClick={() => handleBackPress(props.setter)}>
-        ← Go back
+        <img src={state.displayHoverArrow ? arrowHover : arrow} />
       </button>
 
-      <h1>Add Gesture</h1>
+      <h1 
+        onMouseEnter={() => playAudio(addGestureAudio)}>
+        Add Gesture
+      </h1>
       <div className="form-center">
         <p>Type in a new gesture label below.</p>
         <form onSubmit={(e) => {
@@ -114,7 +140,7 @@ const AddGesture = (props) => {
         }}>
           <div id="formAndButton">
             <input type="text" autoFocus value={state.value} onChange={(e) => { handleChange(e, setState, state.uuid) }} />
-            <input type="submit" onMouseEnter={() => playAudio(addGestureAudio)} value="Add" />
+            <input type="submit" onMouseEnter={() => playAudio(addAudio)} value="Add" />
           </div>
         </form>
       </div>

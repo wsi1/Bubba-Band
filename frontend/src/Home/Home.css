@@ -1,4 +1,15 @@
-div > h1 {
+div > h1:not(#homeTitle, #addTitle) {
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: max-content;
+  font-weight: bold;
+  font-size: 4em;
+  top: 10vh;
+}
+
+#homeTitle, #addTitle {
   width: max-content;
   font-weight: bold;
   font-size: 4em;

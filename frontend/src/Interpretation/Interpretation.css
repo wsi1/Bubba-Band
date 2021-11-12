@@ -47,6 +47,12 @@ p {
   bottom: 0px;
 }
 
+#fun {
+  position: absolute;
+  left: 300px;
+  bottom: 0px;
+}
+
 .hidden {
   display: none;
 }
@@ -83,8 +89,4 @@ div > .responseText {
 
 .hidden {
   display: none;
-}
-
-#interpretHeader {
-  margin-top: 20px;
 }

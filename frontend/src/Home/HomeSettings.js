@@ -1,8 +1,13 @@
 import React, { Component, useState, setState } from 'react';
 import "./HomeSettings.css";
 
+//images
 import sound_icon from "../images/volume-up-solid.svg";
 import noSound_icon from "../images/volume-mute-solid.svg";
+import arrow from "../images/arrow.png"
+import arrowHover from "../images/arrow_hover.png"
+
+//audios
 import settings_audio from "../audios/settings.mp3";
 import back_audio from "../audios/go_back.mp3";
 
@@ -42,6 +47,18 @@ function updateHoverToggle(props, setter) {
   console.log("updateHoverToggle props after update: ", props);
 }
 
+function handleArrowHover(state, setState, mouseEnter) {
+  playAudio(goBackAudio);
+  changeArrow(state, setState, mouseEnter);
+}
+
+function changeArrow(state, setState, mouseEnter) {
+  setState({
+    hover: state.hover,
+    displayHoverArrow: mouseEnter
+  });
+}
+
 const HomeSettings = (props) => {
 
   const [state, setState] = useState({
@@ -52,9 +69,10 @@ const HomeSettings = (props) => {
     <div>
       <button 
         class="goBackButton" 
-        onMouseEnter={() => playAudio(goBackAudio, state.hover)}
+        onMouseEnter={() => handleArrowHover(state, setState, true)}
+        onMouseLeave={() => changeArrow(state, setState, false)}
         onClick={() => goBack( props.setter, props)}>
-        ← Go back
+        <img src={state.displayHoverArrow ? arrowHover : arrow} />
       </button>
       
       <div class="homeSettings">
