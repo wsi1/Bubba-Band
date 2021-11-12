@@ -41,7 +41,7 @@ class real_time_peak_detection:
         return_peak_data = 0
         if self.peak_found:
             self.count += 1
-            if self.count == 30:
+            if self.count == 10:
                 return_peak_data = 1
                 self.signals[i] = 1
                 self.peak_found = False
@@ -64,11 +64,13 @@ class real_time_peak_detection:
                 # self.signals[i] = 0
                 #self.count += 1
                 self.peak_found = True
+                print("1")
             else:
                 self.signals[i] = -1
                 # self.signals[i] = 0
-                #self.count += 1
-                self.peak_found = True
+                # self.count += 1
+                # self.peak_found = True
+                print("-1")
 
             self.filteredY[i] = (
                 self.influence * self.y[i]

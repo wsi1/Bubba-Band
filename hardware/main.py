@@ -77,7 +77,7 @@ def write_model_to_file(file_ptr, m):
 
 def gestures():
     print("listening for gestures")
-    peak_detector = real_time_peak_detection([0.5] * buflen, 7, 10, 0.5)
+    peak_detector = real_time_peak_detection([0.5] * buflen, 7, 10, 0.8)
     while True:
         signals, array = peak_detector.thresholding_algo(flex.value)
         if signals == 1:
@@ -126,7 +126,7 @@ def update_model(data, label):
             "m2": m2
         }
         model[label] = label_model
-    # write_model_to_file(model_file, model)
+    write_model_to_file(model_file, model)
     return model
 
 
@@ -166,4 +166,4 @@ def connect():
     while True:
         get_data()
 
-sio.connect("http://73f0-35-2-21-78.ngrok.io")
+sio.connect("http://ec2-3-17-64-150.us-east-2.compute.amazonaws.com")
