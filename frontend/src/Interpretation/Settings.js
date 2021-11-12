@@ -8,9 +8,13 @@ import animations_audio from "../audios/animations.mp3";
 import audio_output_audio from "../audios/audio_output.mp3";
 
 // images
-import waiting from '../images/messages-typing.gif'; // Tell webpack this JS file uses this image
-import displayImage from "../images/display.png"
-import volumeImage from "../images/volume.png"
+import waiting from '../images/messages-typing.gif'; 
+import soundIcon from "../images/volume-up-solid.svg";
+import noSoundIcon from "../images/volume-mute-solid.svg";
+import displayIcon from "../images/eye-solid.svg";
+import noDisplayIcon from "../images/eye-slash-solid.svg";
+import arrow from "../images/arrow.png"
+import arrowHover from "../images/arrow_hover.png"
 
 import "./Settings.css";
 
@@ -71,6 +75,19 @@ function playAudio(audio) {
   }
 }
 
+function handleArrowHover(state, setState, mouseEnter) {
+  playAudio(goBackAudio);
+  changeArrow(state, setState, mouseEnter);
+}
+
+function changeArrow(state, setState, mouseEnter) {
+  setState({
+    view: state.view,
+    isDisplayOn: state.isDisplayOn,
+    isAudioOn: state.isAudioOn,
+    displayHoverArrow: mouseEnter
+  });
+}
 
 const Settings = (props) => {
   const history = useHistory();
@@ -82,11 +99,11 @@ const Settings = (props) => {
 
   return (
     <div>
-      <button 
-      class="goBackButton" 
-      onMouseEnter={() => playAudio(goBackAudio)}
-      onClick={() => goBack(state, props.setter)}>
-      ← Go back
+      <button class="goBackButton" 
+          onMouseEnter={() => handleArrowHover(state, setState, true)}
+          onMouseLeave={() => changeArrow(state, setState, false)} 
+          onClick={() => goBack(state, props.setter)}>
+          <img src={state.displayHoverArrow ? arrowHover : arrow} />
       </button>
       <div id="all">
           <h1
@@ -95,11 +112,18 @@ const Settings = (props) => {
           </h1>      
           </div>
           <div class="content">
-            <div class="settings"
-              onMouseEnter={() => playAudio(animationsAudio)}>
-                <p class="title">Animations</p>
+            <div class="settings">
+                <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Animations</p>
                 <p class="caption">When turned on, an animation will appear each time a gesture is made.</p>
-                <img src={displayImage} class="settingsImage" alt="TV screen"/>
+                {state.isDisplayOn ? 
+                <div>
+                  <img className="icon" src={displayIcon} alt="Eye Icon" /> 
+                </div>
+                :
+                <div>
+                  <img className="icon" src={noDisplayIcon} alt="No Eye Icon" />
+                </div>
+                }
                 <p class="descr">{state.isDisplayOn ? "Animations for gestures are ON" : "Animations for gestures are OFF"}</p>
                 <div class="buttonContainer">
                   <label class="switch">
@@ -108,11 +132,18 @@ const Settings = (props) => {
                   </label>
                 </div>
             </div>
-            <div class="settings"
-              onMouseEnter={() => playAudio(audioOutputAudio)}>
-                <p class="title">Audio</p>
+            <div class="settings">
+                <p class="title" onMouseEnter={() => playAudio(audioOutputAudio)}>Audio</p>
                 <p class="caption">When turned on, audio of the interpreted response will play each time a gesture is made.</p>
-                <img src={volumeImage} class="settingsImage" alt="TV screen"/>
+                {state.isAudioOn ? 
+                <div>
+                  <img className="icon" src={soundIcon} alt="Sound Icon" /> 
+                </div>
+                :
+                <div>
+                  <img className="icon" src={noSoundIcon} alt="No Sound Icon" />
+                </div>
+                }
                 <p class="descr">{state.isAudioOn ? "Audio for gestures is ON" : "Audio for gestures is OFF"}</p>
                 <div class="buttonContainer">
                   <label class="switch">

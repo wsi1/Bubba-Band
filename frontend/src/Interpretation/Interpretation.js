@@ -1,13 +1,18 @@
-import React, { Component, useState, useContext, useEffect } from 'react';
+import React, { Component, useState, useContext, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SocketContext } from '../context/socket';
 
-// gifs
+// visuals
 import waiting from '../images/messages-typing.gif'; 
 import nodding_head from '../images/yes.gif';
 import wave from '../images/waving.gif'; 
 import maybe from '../images/maybe.gif'; 
 import come from '../images/come.gif';
+import gear from "../images/gear.png"
+import gearHover from "../images/gear_hover.png"
+import arrow from "../images/arrow.png"
+import happy from "../images/happy.gif"
+import arrowHover from "../images/arrow_hover.png"
 
 // audios
 import yes_audio from '../audios/yes.mp3';
@@ -19,6 +24,7 @@ import back_audio from "../audios/go_back.mp3";
 import settings_audio from "../audios/settings.mp3";
 import interpretation_audio from "../audios/interpretation.mp3";
 import waiting_audio from "../audios/waiting.mp3";
+import happy_audio from "../audios/fun.mp3";
 
 // style
 import "./Interpretation.css";
@@ -36,7 +42,9 @@ let settingsAudio = new Audio(settings_audio);
 let goBackAudio = new Audio(back_audio);
 let interpretationAudio = new Audio(interpretation_audio);
 let waitingAudio = new Audio(waiting_audio);
-let allAudios = [yesAudio, comeAudio, hiAudio, maybeAudio, settingsAudio, goBackAudio, interpretationAudio, waitingAudio];
+let funAudio = new Audio(happy_audio);
+let allAudios = [yesAudio, comeAudio, hiAudio, maybeAudio, settingsAudio, 
+    goBackAudio, interpretationAudio, waitingAudio, funAudio];
 
 function displayResponse(state, setState, response) {
     console.log(response);
@@ -73,6 +81,14 @@ function displayResponse(state, setState, response) {
         responseImage = maybe;
         responseText = 'Maybe...';
         responseColor = '#f5a85b';
+
+    } else if (response == 'happy') {
+        console.log('happy branch');
+        audio = funAudio;
+
+        responseImage = happy;
+        responseText = 'This is fun!';
+        responseColor = '#db6935';
 
     } // end of if-else
 
@@ -140,6 +156,47 @@ function playAudio(audio) {
     }
 }
 
+function handleHover(state, setState, button, mouseEnter) {
+    if (button == 'settings') {
+        playAudio(settingsAudio);
+        changeGear(state, setState);
+    } else if (button == 'goBack') {
+        playAudio(goBackAudio);
+        changeArrow(state, setState, mouseEnter);
+    }
+}
+
+function changeGear(state, setState) {
+    setState({
+        backgroundColor: state.backgroundColor,
+        displayWaiting: state.displayWaiting,
+        displayYes: state.displayYes,
+        displayNo: state.displayNo,
+        displayHi: state.displayHi,
+        isDisplayOn: state.isDisplayOn,
+        isAudioOn: state.isAudioOn,
+        image: state.image,
+        text: state.text,
+        displayHoverGear: !state.displayHoverGear
+    });
+}
+
+function changeArrow(state, setState, mouseEnter) {
+    setState({
+        backgroundColor: state.backgroundColor,
+        displayWaiting: state.displayWaiting,
+        displayYes: state.displayYes,
+        displayNo: state.displayNo,
+        displayHi: state.displayHi,
+        isDisplayOn: state.isDisplayOn,
+        isAudioOn: state.isAudioOn,
+        image: state.image,
+        text: state.text,
+        displayHoverGear: state.displayHoverGear,
+        displayHoverArrow: mouseEnter
+    });
+}
+
 const Interpretation = (props) => {
     console.log("prop: ", props.parentState);
     hoverIsOn = props.parentState.hover;
@@ -186,11 +243,21 @@ const Interpretation = (props) => {
         isDisplayOn: true,
         isAudioOn: true,
         image: waiting,
-        text: 'Waiting for a gesture to be made ...'
+        text: 'Waiting for a gesture to be made ...',
+        displayHoverGear: false,
+        displayHoverArrow: false,
     });
 
+    const stateRef = useRef();
+    stateRef.current = {
+        view: state.view,
+    };
+
     function interpretGesture() {
-      console.log("1 second has passed, processing gesture(s) now")
+        if (stateRef.current.view == "settings") {
+            return;
+        }
+        console.log("1 second has passed, processing gesture(s) now")
         if (currGesture == "soft tap") {
             if (numCurrGesture == 1) {
                 displayResponse(state, setState, 'maybe');
@@ -220,18 +287,20 @@ const Interpretation = (props) => {
         :
             <div class="size" style={{backgroundColor: state.backgroundColor}}>
                 <button class="goBackButton" 
-                    onMouseEnter={(() => playAudio(goBackAudio))} 
+                    onMouseEnter={() => handleHover(state, setState, 'goBack', true)}
+                    onMouseLeave={() => changeArrow(state, setState, false)} 
                     onClick={() => history.push("/")}>
-                    ← Go back
+                    <img src={state.displayHoverArrow ? arrowHover : arrow} />
                 </button>
 
-                <button id="settings" 
-                    onMouseEnter={(() => playAudio(settingsAudio))} 
+                <button id="settings" id="settingsGear" 
+                    onMouseEnter={() => handleHover(state, setState, 'settings')}
+                    onMouseLeave={() => changeGear(state, setState)}
                     onClick={() => setViewToSettings(state, setState)}>
-                    Settings ⚙
+                    <img src={state.displayHoverGear ? gearHover : gear} />
                 </button>
 
-                <h1 
+                <h1 id="interpretHeader"
                     style={{backgroundColor: state.backgroundColor}}
                     onMouseEnter={() => playAudio(interpretationAudio)}>
                     Interpretation
@@ -266,6 +335,10 @@ const Interpretation = (props) => {
                     <button id="maybe" 
                         onClick={() => displayResponse(state, setState, 'maybe')}>
                         maybe
+                    </button>
+                    <button id="fun" 
+                        onClick={() => displayResponse(state, setState, 'happy')}>
+                        fun
                     </button>
                 </div>
             </div>

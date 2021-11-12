@@ -5,25 +5,29 @@ import { useHistory } from 'react-router-dom';
 import AddGesture from './AddGesture';
 import "./Calibration.css";
 
-// animations
+// visuals
 import waiting from "../images/messages-typing.gif";
+import arrow from "../images/arrow.png"
+import arrowHover from "../images/arrow_hover.png"
 
 // audios
 import back_audio from "../audios/go_back.mp3";
 import add_gesture_audio from  "../audios/add_gesture.mp3";
 import calibration_audio from "../audios/calibration.mp3";
 import waiting_audio from "../audios/waiting.mp3";
-import skip_audio from "../audios/skip.mp3";
+import needs_label from "../audios/needs_a_label.mp3";
 
-let backAudio = new Audio(back_audio);
+let goBackAudio = new Audio(back_audio);
 let addGestureAudio = new Audio(add_gesture_audio);
 let calibrationAudio = new Audio(calibration_audio);
 let waitingAudio = new Audio(waiting_audio);
-let skipAudio = new Audio(skip_audio);
+let needsLabelAudio = new Audio(needs_label);
 
-let allAudios = [backAudio, addGestureAudio, calibrationAudio, waitingAudio, skipAudio];
+let allAudios = [goBackAudio, addGestureAudio, calibrationAudio, waitingAudio, needsLabelAudio];
 
 function playAudio(audio, hover) {
+    console.log(audio);
+    console.log(hover);
     // if the mouse moves to another element before the previous sound finishes,
     // stop the previous sound before playing the new sound
     // this is to prevent sounds from overlapping one another with quick mouse movement
@@ -67,6 +71,20 @@ function handleSubmit(socket, val, state, setState) {
 
     setState({
         view: "waiting",
+    });
+}
+
+function handleArrowHover(state, setState, hover, mouseEnter) {
+    console.log('here');
+    playAudio(goBackAudio, hover);
+    changeArrow(state, setState, mouseEnter);
+}
+  
+function changeArrow(state, setState, mouseEnter) {
+    setState({
+        view: state.view,
+        uuid: state.uuid,
+        displayHoverArrow: mouseEnter
     });
 }
 
@@ -118,9 +136,10 @@ const Calibration = (props) => {
                 <div className="waiting">
                     <button
                         className="goBackButton"
-                        onMouseEnter={() => playAudio(backAudio, hover)}
+                        onMouseEnter={() => handleArrowHover(state, setState, hover, true)}
+                        onMouseLeave={() => changeArrow(state, setState, false)}
                         onClick={() => history.push("/")}>
-                        ← Go back
+                        <img src={state.displayHoverArrow ? arrowHover : arrow} />
                     </button>
 
                     <h1
@@ -140,40 +159,46 @@ const Calibration = (props) => {
                     <div>
                         <button
                             className="goBackButton" id="skip"
-                            onMouseEnter={() => playAudio(skipAudio, hover)}
+                            onMouseEnter={() => handleArrowHover(state, setState, hover, true)}                        onMouseLeave={() => changeArrow(state, setState, false)}
+                            onMouseLeave={() => changeArrow(state, setState, false)}
                             onClick={() => handleBackPress(setState)}>
-                            ← Skip gesture label
+                        <img src={state.displayHoverArrow ? arrowHover : arrow} />
                         </button>
-
-                        <h1>Gesture needs a label!</h1>
-                        <p id="instructions">To label the gesture, click "Add Gesture" to make a new gesture label or select an existing gesture below.</p>
-                        <div class="buttons">
-                            <button
-                                className="add"
-                                onMouseEnter={() => playAudio(addGestureAudio, hover)}
-                                onClick={() => { changeView("add", state, setState, state.uuid) }}>
-                                Add Gesture
-                            </button>
-                            <br />
-                            <hr className="divide" />
-                            <br />
-                            <div className="gestures">
-                                {props.existingGestures.length == 0 ?
-                                    <div>
-                                        <p id="noExisting">No gestures have been created yet.</p>
-                                    </div>
-                                    :
-                                    <div>
-                                        {(props.existingGestures).map((gesture) => <button 
-                                            type="button"
-                                            id="gestureButton"
-                                            onClick={() => handleSubmit(socket, gesture, state, setState)}>
-                                            {gesture}
-                                            </button>
-                                        )}
-                                    </div>
-                                }
-                            </div>
+                        <div id="content">
+                            <h1 
+                                id="addTitle"
+                                onMouseEnter={() => playAudio(needsLabelAudio, hover)}>
+                                Gesture needs a label!
+                            </h1>
+                            <p id="instructions">Click "Add Gesture" to make a new gesture label or select an existing gesture below.</p>
+                            <div class="buttons">
+                                <button
+                                    className="add"
+                                    onMouseEnter={() => playAudio(addGestureAudio, hover)}
+                                    onClick={() => { changeView("add", state, setState, state.uuid) }}>
+                                    Add Gesture
+                                </button>
+                                <br />
+                                <hr className="divide" />
+                                <br />
+                                <div className="gestures">
+                                    {props.existingGestures.length == 0 ?
+                                        <div>
+                                            <p id="noExisting">No gestures have been created yet.</p>
+                                        </div>
+                                        :
+                                        <div>
+                                            {(props.existingGestures).map((gesture) => <button 
+                                                type="button"
+                                                id="gestureButton"
+                                                onClick={() => handleSubmit(socket, gesture, state, setState)}>
+                                                {gesture}
+                                                </button>
+                                            )}
+                                        </div>
+                                    }
+                                </div>
+                                </div>
                         </div>
                         <br />
                     </div>

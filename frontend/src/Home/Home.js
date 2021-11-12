@@ -14,6 +14,8 @@ import settings_audio from "../audios/settings.mp3";
 
 // images
 import frogs from "../images/frog.gif"
+import gear from "../images/gear.png"
+import gearHover from "../images/gear_hover.png"
 
 // audios
 let calibrationAudio = new Audio(calibration);
@@ -41,14 +43,27 @@ function playAudio(audio) {
 
 function setViewToSettings(state, setState) {
   setState({
-    view: "settings"
+    view: "settings",
   });
+}
+
+function changeGear(state, setState) {
+  setState({
+    view: "home",
+    displayHoverGear: !state.displayHoverGear
+  });
+}
+
+function handleGearClick(state, setState) {
+  playAudio(settingsAudio);
+  changeGear(state, setState)
 }
 
 const Home = (props) => {
     const history = useHistory();
     const [state, setState] = useState({
         view: "home",
+        displayHoverGear: false,
     });
 
     console.log("prop: ", props);
@@ -62,42 +77,46 @@ const Home = (props) => {
               
               : 
             
-              <div className="lander">
-                <h1
-                  onMouseEnter={() => playAudio(welcomeAudio)}>
-                  Welcome to Bubba Band!
-                </h1>
-
-                <img src={frogs} id="homeImage" alt="Logo"/>
-
-                <p id="home"
-                onMouseEnter={() => playAudio(selectModeAudio)}>
-                  Select a mode below to begin
-                </p>
-
-                <div class="flex-container">
-                  <button 
-                    variant="btn btn-success" 
-                    class="homeButton" 
-                    onMouseEnter={() => playAudio(calibrationAudio)}
-                    onClick={() => history.push('/calibration')}> 
-                    Calibration
-                  </button>
-                  <button 
-                    variant="btn btn-success" 
-                    class="homeButton" 
-                    onMouseEnter={() => playAudio(interpretationAudio)}
-                    onClick={() => history.push('/interpretation')}>
-                    Interpretation
-                  </button>
-                </div>
+              <div>
                 <button 
-                  id="settings" 
-                  onClick={() => setViewToSettings(state, setState)}
-                  onMouseEnter={() => playAudio(settingsAudio)}>
-                  ⚙ Settings
-                </button> 
-              </div> // lander
+                    id="settingsGear" 
+                    onClick={() => setViewToSettings(state, setState)}
+                    onMouseEnter={() => handleGearClick(state, setState)}
+                    onMouseLeave={() => changeGear(state, setState)}>
+                    <img src={state.displayHoverGear ? gearHover : gear} />
+                  </button> 
+                <div className="lander">
+                  <h1 id="homeTitle"
+                    onMouseEnter={() => playAudio(welcomeAudio)}>
+                    Welcome to Bubba Band!
+                  </h1>
+
+                  <img src={frogs} id="homeImage" alt="Logo"/>
+
+                  <p id="home"
+                  onMouseEnter={() => playAudio(selectModeAudio)}>
+                    Select a mode below to begin
+                  </p>
+
+                  <div class="flex-container">
+                    <button 
+                      variant="btn btn-success" 
+                      class="homeButton" 
+                      onMouseEnter={() => playAudio(calibrationAudio)}
+                      onClick={() => history.push('/calibration')}> 
+                      Calibration
+                    </button>
+                    <button 
+                      variant="btn btn-success" 
+                      class="homeButton" 
+                      onMouseEnter={() => playAudio(interpretationAudio)}
+                      onClick={() => history.push('/interpretation')}>
+                      Interpretation
+                    </button>
+                  </div>
+                  {/* end of lander */}
+                </div> 
+              </div>
             }
         </div>
   
