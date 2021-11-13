@@ -91,7 +91,7 @@ function displayResponse(state, setState, response) {
         responseColor = '#db6935';
 
     } // end of if-else
-
+    
     if (state.isDisplayOn) {
         clearTimeout(timeout);
         setState({
@@ -204,21 +204,21 @@ const Interpretation = (props) => {
     hoverIsOn = props.parentState.hover;
 
     const socket = useContext(SocketContext);
-    let currGesture = ""
-    let numCurrGesture = 0
+    let firstGesture = ""
+    let numGestures = 0
 
     // TODO: should I be using a mutex for incrementing the value??
     // Handle the data from socket to keep track of number of gestures
     let timeout = null
     function socketHandler(data) {
-      console.log({currGesture, numCurrGesture})
+      console.log({firstGesture, numGestures})
         window.clearTimeout(timeout)
-        if (data.gesture == currGesture) {
-            numCurrGesture += 1;
+        if (firstGesture === "Hard tap") {
+            numGestures += 1;
         }
         else {
-            currGesture = data.gesture;
-            numCurrGesture = 1;
+            firstGesture = data.gesture;
+            numGestures = 1;
         }
         timeout = window.setTimeout(interpretGesture, 2000)
     }
@@ -253,6 +253,8 @@ const Interpretation = (props) => {
     const stateRef = useRef();
     stateRef.current = {
         view: state.view,
+        isDisplayOn: state.isDisplayOn,
+        isAudioOn: state.isAudioOn,
     };
 
     function interpretGesture() {
@@ -260,29 +262,25 @@ const Interpretation = (props) => {
             return;
         }
         console.log("1 second has passed, processing gesture(s) now")
-        if (currGesture == "Soft tap") {
-            if (numCurrGesture == 1) {
-                displayResponse(state, setState, 'maybe');
+        if (firstGesture == "Soft tap") {
+            displayResponse(stateRef.current, setState, 'maybe');
+        }
+        else if (firstGesture == "Hold") {
+            displayResponse(stateRef.current, setState, 'come');
+        }
+        else if (firstGesture == "Hard tap") {
+            if (numGestures == 1) {
+                displayResponse(stateRef.current, setState, 'yes');
             }
         }
-        else if (currGesture == "Hold") {
-            if (numCurrGesture == 1) {
-                displayResponse(state, setState, 'come');
-            }
+        if (numGestures == 2) {
+            displayResponse(stateRef.current, setState, 'hi');
         }
-        else if (currGesture == "Hard tap") {
-            if (numCurrGesture == 1) {
-                displayResponse(state, setState, 'yes');
-            }
+        else if (numGestures > 4) {
+          displayResponse(stateRef.current, setState, 'happy')
         }
-        if (numCurrGesture == 2) {
-            displayResponse(state, setState, 'hi');
-        }
-        else if (numCurrGesture > 4) {
-          displayResponse(state, setState, 'happy')
-        }
-        currGesture = "";
-        numCurrGesture = 0;
+        firstGesture = "";
+        numGestures = 0;
     }
 
     console.log("Interpretation props: ", props);
