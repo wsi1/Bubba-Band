@@ -129,6 +129,7 @@ function displayResponse(state, setState, response) {
             text: 'Waiting for a gesture to be made ...',
             isDisplayOn: state.isDisplayOn,
             isAudioOn: state.isAudioOn,
+            displayHoverGear: state.displayHoverGear
         });
     }, 3000);
 };
@@ -159,14 +160,14 @@ function playAudio(audio) {
 function handleHover(state, setState, button, mouseEnter) {
     if (button == 'settings') {
         playAudio(settingsAudio);
-        changeGear(state, setState);
+        changeGear(state, setState, mouseEnter);
     } else if (button == 'goBack') {
         playAudio(goBackAudio);
         changeArrow(state, setState, mouseEnter);
     }
 }
 
-function changeGear(state, setState) {
+function changeGear(state, setState, mouseEnter) {
     setState({
         backgroundColor: state.backgroundColor,
         displayWaiting: state.displayWaiting,
@@ -177,7 +178,8 @@ function changeGear(state, setState) {
         isAudioOn: state.isAudioOn,
         image: state.image,
         text: state.text,
-        displayHoverGear: !state.displayHoverGear
+        displayHoverGear: mouseEnter,
+        displayHoverArrow: state.displayHoverArrow
     });
 }
 
@@ -299,8 +301,8 @@ const Interpretation = (props) => {
                 </button>
 
                 <button id="settings" id="settingsGear" 
-                    onMouseEnter={() => handleHover(state, setState, 'settings')}
-                    onMouseLeave={() => changeGear(state, setState)}
+                    onMouseEnter={() => handleHover(state, setState, 'settings', true)}
+                    onMouseLeave={() => changeGear(state, setState, false)}
                     onClick={() => setViewToSettings(state, setState)}>
                     <img src={state.displayHoverGear ? gearHover : gear} />
                 </button>
