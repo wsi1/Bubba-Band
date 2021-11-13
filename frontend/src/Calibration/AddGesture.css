@@ -20,7 +20,7 @@ input[type=text]:focus {
 input[type=submit] {
     display: block;
     padding: 10px;
-    background-color: lightskyblue;
+    background-color: #E33A41;
     border: none;
     border-radius: 15px;
     font-size: 1.2em;
@@ -29,10 +29,10 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color:#348feb;
+    background-color:#e8e8e8;
     padding: 6px;
-    border: 4px solid #348feb;
-    color: white;
+    border: 4px solid #e8e8e8;
+    color: #E33A41;
 }
 
 .form-center {
