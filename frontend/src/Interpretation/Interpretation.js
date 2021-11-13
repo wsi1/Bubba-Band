@@ -218,7 +218,7 @@ const Interpretation = (props) => {
             currGesture = data.gesture;
             numCurrGesture = 1;
         }
-        timeout = window.setTimeout(interpretGesture, 1000)
+        timeout = window.setTimeout(interpretGesture, 2000)
     }
 
     useEffect(() => {
@@ -258,21 +258,26 @@ const Interpretation = (props) => {
             return;
         }
         console.log("1 second has passed, processing gesture(s) now")
-        if (currGesture == "soft tap") {
+        if (currGesture == "Soft tap") {
             if (numCurrGesture == 1) {
                 displayResponse(state, setState, 'maybe');
             }
         }
-        else if (currGesture == "hard tap") {
+        else if (currGesture == "Hold") {
+            if (numCurrGesture == 1) {
+                displayResponse(state, setState, 'come');
+            }
+        }
+        else if (currGesture == "Hard tap") {
             if (numCurrGesture == 1) {
                 displayResponse(state, setState, 'yes');
             }
-            else if (numCurrGesture == 2) {
-                displayResponse(state, setState, 'hi');
-            }
-            else if (numCurrGesture > 4) {
-              displayResponse(state, setState, 'no')
-            }
+        }
+        if (numCurrGesture == 2) {
+            displayResponse(state, setState, 'hi');
+        }
+        else if (numCurrGesture > 4) {
+          displayResponse(state, setState, 'happy')
         }
         currGesture = "";
         numCurrGesture = 0;
