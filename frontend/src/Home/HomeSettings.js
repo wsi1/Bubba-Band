@@ -39,7 +39,15 @@ function goBack(setState, props) {
 
 function updateHoverToggle(props, setter) {
   props.hover = !props.hover;
-
+  
+  if(props.hover) {
+    window.localStorage.setItem("hoverOn", "true");
+  }
+  else {
+    window.localStorage.setItem("hoverOn", "false");
+  }
+  
+  
   setter({
     hover: props.hover,
   });
@@ -61,10 +69,12 @@ function changeArrow(state, setState, mouseEnter) {
 
 const HomeSettings = (props) => {
 
+  
   const [state, setState] = useState({
-    hover: props.parentState.hover,
+    hover: props.hover,
   });
 
+  
   return (
     <div>
       <button 
@@ -90,7 +100,7 @@ const HomeSettings = (props) => {
         <p class="descr">{state.hover ? "Hover audio is ON" : "Hover audio is OFF"}</p>
         <div class="buttonContainer">
           <label class="switch">
-            <input type="checkbox" id="hoverToggle" checked={state.hover} onChange={() => updateHoverToggle(props.parentState, setState)}/>
+            <input type="checkbox" id="hoverToggle" checked={state.hover} onChange={() => updateHoverToggle(state.hover, setState)}/>
             <span class="slider round"></span>
           </label>
         </div>

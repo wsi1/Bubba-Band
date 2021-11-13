@@ -25,7 +25,7 @@ let welcomeAudio = new Audio(welcome);
 let settingsAudio = new Audio(settings_audio);
 let allAudios = [calibrationAudio, interpretationAudio, selectModeAudio, welcomeAudio, settingsAudio];
 
-let hoverIsOn = true;
+let hoverIsOn = window.localStorage.getItem("hoverOn") == "true";
 
 function playAudio(audio) {
   // if the mouse moves to another element before the previous sound finishes,
@@ -68,12 +68,12 @@ const Home = (props) => {
 
     console.log("prop: ", props);
 
-    hoverIsOn = props.parentState.hover;
-
+    hoverIsOn = window.localStorage.getItem("hoverOn") == "true";
+   
     return (
       <div className="Home">
             {state.view == "settings" ? 
-              <HomeSettings setter={setState} parentState={props.parentState} hover={props.hover}/> 
+              <HomeSettings setter={setState} parentState={props.parentState} hover={hoverIsOn}/> 
               
               : 
             

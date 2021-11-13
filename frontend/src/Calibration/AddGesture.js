@@ -56,6 +56,7 @@ function handleSubmit(event, val, setState, gestures, uuid) {
     }
     else {
       newState.push(val);
+      window.localStorage.setItem("gestures", JSON.stringify(newState));
     }
 
     socket.emit("frontend", {

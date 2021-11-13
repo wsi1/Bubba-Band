@@ -12,9 +12,15 @@ import history from './history';
 export default class Routes extends Component {
     constructor(props) {
         super(props);
+        if (!window.localStorage.getItem("gestures")) {
+            window.localStorage.setItem("gestures", JSON.stringify(["Hard tap", "Soft tap", "Hold"]))
+        }
+        if (!window.localStorage.getItem("hoverOn")) {
+            window.localStorage.setItem("hoverOn", "true");
+        }
         this.state = {
-            gestures: ["Hard tap", "Soft tap"],
-            hover: true
+            gestures: JSON.parse(window.localStorage.getItem("gestures")),
+            hover: window.localStorage.getItem("hoverOn"),
         };
     }
     
