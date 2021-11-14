@@ -30,7 +30,7 @@ npm install
 
 The backend is hosted on http://ec2-3-17-64-150.us-east-2.compute.amazonaws.com/ so the armband is completely wireless.
 
-### **Frontend**
+### **Frontend Setup**
 
 To run the frontend, run the following in  new terminal (depending on `yarn` or `npm`):
 ```
@@ -92,17 +92,3 @@ To send a signal to the frontend, you either input a 1 (hard tap), 2 (soft tap) 
 - 5+ hard taps = Happy
 - Holding wrist down = Need help
 - 1 soft tap = Maybe
-
-### **Frontend Setup**
-
-To run the frontend, run the following (depending on `yarn` or `npm`):
-```
-cd frontend/
-yarn start
-```
-or
-```
-cd frontend/
-npm start
-```
-
