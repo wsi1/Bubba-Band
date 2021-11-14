@@ -82,7 +82,7 @@ You can run the Raspberry Pi emulator file `fakePi/fakePi.py` to mimic its signa
 
 In the root directory:
 ```
-python3 backend/fakePi/fakePi.py
+python3 hardware/fakePi/fakePi.py
 ```
 
 To send a signal to the frontend, you either input a 1 (hard tap), 2 (soft tap) or 3 (holding wrist down) in the terminal.

@@ -14,7 +14,7 @@ def send_message_as_raspberry(data):
     sio.emit("raspberry", data)
 
 def make_gesture():
-    val = input("Gesture # (1 for hard, 2 for soft): ")
+    val = input("Gesture # (1 for hard, 2 for soft, 3 for hold): ")
     gesture_id = uuid.uuid4().hex
     if val == "1":
         send_message_as_raspberry({"gesture" : "Hard tap", "uuid": gesture_id})
