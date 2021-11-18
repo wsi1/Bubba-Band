@@ -91,7 +91,7 @@ function displayResponse(state, setState, response) {
         responseColor = '#db6935';
 
     } // end of if-else
-
+    
     if (state.isDisplayOn) {
         clearTimeout(timeout);
         setState({
@@ -129,6 +129,7 @@ function displayResponse(state, setState, response) {
             text: 'Waiting for a gesture to be made ...',
             isDisplayOn: state.isDisplayOn,
             isAudioOn: state.isAudioOn,
+            displayHoverGear: state.displayHoverGear
         });
     }, 3000);
 };
@@ -159,14 +160,14 @@ function playAudio(audio) {
 function handleHover(state, setState, button, mouseEnter) {
     if (button == 'settings') {
         playAudio(settingsAudio);
-        changeGear(state, setState);
+        changeGear(state, setState, mouseEnter);
     } else if (button == 'goBack') {
         playAudio(goBackAudio);
         changeArrow(state, setState, mouseEnter);
     }
 }
 
-function changeGear(state, setState) {
+function changeGear(state, setState, mouseEnter) {
     setState({
         backgroundColor: state.backgroundColor,
         displayWaiting: state.displayWaiting,
@@ -177,7 +178,8 @@ function changeGear(state, setState) {
         isAudioOn: state.isAudioOn,
         image: state.image,
         text: state.text,
-        displayHoverGear: !state.displayHoverGear
+        displayHoverGear: mouseEnter,
+        displayHoverArrow: state.displayHoverArrow
     });
 }
 
@@ -202,23 +204,23 @@ const Interpretation = (props) => {
     hoverIsOn = props.parentState.hover;
 
     const socket = useContext(SocketContext);
-    let currGesture = ""
-    let numCurrGesture = 0
+    let firstGesture = ""
+    let numGestures = 0
 
     // TODO: should I be using a mutex for incrementing the value??
     // Handle the data from socket to keep track of number of gestures
     let timeout = null
     function socketHandler(data) {
-      console.log({currGesture, numCurrGesture})
+      console.log({firstGesture, numGestures})
         window.clearTimeout(timeout)
-        if (data.gesture == currGesture) {
-            numCurrGesture += 1;
+        if (firstGesture === "Hard tap") {
+            numGestures += 1;
         }
         else {
-            currGesture = data.gesture;
-            numCurrGesture = 1;
+            firstGesture = data.gesture;
+            numGestures = 1;
         }
-        timeout = window.setTimeout(interpretGesture, 1000)
+        timeout = window.setTimeout(interpretGesture, 2000)
     }
 
     useEffect(() => {
@@ -251,6 +253,8 @@ const Interpretation = (props) => {
     const stateRef = useRef();
     stateRef.current = {
         view: state.view,
+        isDisplayOn: state.isDisplayOn,
+        isAudioOn: state.isAudioOn,
     };
 
     function interpretGesture() {
@@ -258,24 +262,25 @@ const Interpretation = (props) => {
             return;
         }
         console.log("1 second has passed, processing gesture(s) now")
-        if (currGesture == "soft tap") {
-            if (numCurrGesture == 1) {
-                displayResponse(state, setState, 'maybe');
+        if (firstGesture == "Soft tap") {
+            displayResponse(stateRef.current, setState, 'maybe');
+        }
+        else if (firstGesture == "Hold") {
+            displayResponse(stateRef.current, setState, 'come');
+        }
+        else if (firstGesture == "Hard tap") {
+            if (numGestures == 1) {
+                displayResponse(stateRef.current, setState, 'yes');
             }
         }
-        else if (currGesture == "hard tap") {
-            if (numCurrGesture == 1) {
-                displayResponse(state, setState, 'yes');
-            }
-            else if (numCurrGesture == 2) {
-                displayResponse(state, setState, 'hi');
-            }
-            else if (numCurrGesture > 4) {
-              displayResponse(state, setState, 'no')
-            }
+        if (numGestures == 2) {
+            displayResponse(stateRef.current, setState, 'hi');
         }
-        currGesture = "";
-        numCurrGesture = 0;
+        else if (numGestures > 4) {
+          displayResponse(stateRef.current, setState, 'happy')
+        }
+        firstGesture = "";
+        numGestures = 0;
     }
 
     console.log("Interpretation props: ", props);
@@ -294,8 +299,8 @@ const Interpretation = (props) => {
                 </button>
 
                 <button id="settings" id="settingsGear" 
-                    onMouseEnter={() => handleHover(state, setState, 'settings')}
-                    onMouseLeave={() => changeGear(state, setState)}
+                    onMouseEnter={() => handleHover(state, setState, 'settings', true)}
+                    onMouseLeave={() => changeGear(state, setState, false)}
                     onClick={() => setViewToSettings(state, setState)}>
                     <img src={state.displayHoverGear ? gearHover : gear} />
                 </button>
