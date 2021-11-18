@@ -324,7 +324,7 @@ const Interpretation = (props) => {
                     </p>
                 </div>
 
-                <div class="testButtons">
+                {/* <div class="testButtons">
                     <button id="yes" 
                         onClick={() => displayResponse(state, setState, 'yes')}>
                         yes
@@ -345,7 +345,7 @@ const Interpretation = (props) => {
                         onClick={() => displayResponse(state, setState, 'happy')}>
                         fun
                     </button>
-                </div>
+                </div> */}
             </div>
         }
         </div>
