@@ -77,7 +77,9 @@ def write_model_to_file(file_ptr, m):
 
 def gestures():
     print("listening for gestures")
-    peak_detector = real_time_peak_detection([0.5] * buflen, 7, 10, 0.8)
+    rng = np.random.default_rng()
+    noise = rng.normal(loc=0.48, scale=0.001, size=buflen)
+    peak_detector = real_time_peak_detection(list(noise), 7, 10, 0.8)
     while True:
         signals, array = peak_detector.thresholding_algo(flex.value)
         if signals == 1:
@@ -110,7 +112,7 @@ def update_model(data, label):
         label_model = {
             "count": 1,
             "mean": np.array(data["data"]),
-            "m2": np.ones(60) * 1e-20
+            "m2": np.ones(20) * 1e-20
         }
         model[label] = label_model
     else:
@@ -135,7 +137,7 @@ def infer_gesture(data):
         return None
     liks = []
     for lm in model.values():
-        mean, variance = lm["mean"], np.ones(60) * 1e-6 # lm["m2"] / lm["count"]
+        mean, variance = lm["mean"], np.ones(20) * 1e-6 # lm["m2"] / lm["count"]
         lik = stats.multivariate_normal.pdf(data, mean, np.sqrt(variance))
         liks.append(lik)
     print(np.array(liks))
