@@ -40,5 +40,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "http://ec2-3-17-64-150.us-east-2.compute.amazonaws.com/frontend/"
 }
