@@ -43,17 +43,16 @@ function playAudio(audio) {
       startPlayPromise.then(() => {
         // Start whatever you need to do only after playback
         // has begun.
-        console.log("true")
-        return true
+        return true;
+
       }).catch(error => {
         if (error.name === "NotAllowedError") {
           console.log("BAD");
-          return false
-
+          return false;
         } else {
           // Handle a load or playback error
-          console.log("Possible playback error")
-          return true
+          console.log("Possible playback error");
+          return true;
         }
       });
     }
@@ -79,16 +78,22 @@ function handleGearClick(state, setState) {
 }
 
 const Home = (props) => {
+    console.log("props hehe", props)
+
     const history = useHistory();
     const [state, setState] = useState({
         view: "home",
         displayHoverGear: false,
         popup: !playAudio(welcomeAudio)
     });
+
+    console.log("RERENDERED");
     
     const [buttonPopup, setButtonPopup] = useState(false);
 
-    console.log("prop: ", props);
+    //console.log("prop: ", props);
+    console.log("display popup", state.popup);
+    console.log("!playAudio", !playAudio(welcomeAudio));
 
     hoverIsOn = props.parentState.hover;
 
@@ -138,6 +143,7 @@ const Home = (props) => {
                   </div>
                   {/* end of lander */}
                 </div> 
+                {console.log(state)}
                 <Popup trigger={state.popup} parentState={props.parentState} setter={setState} setTrigger={setButtonPopup}></Popup>
               </div>
             }
