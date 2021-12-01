@@ -88,7 +88,7 @@ const Home = (props) => {
                 <div className="lander">
                   <h1 id="homeTitle"
                     onMouseEnter={() => playAudio(welcomeAudio)}>
-                    Welcome to Bubba Band!
+                    THIS IS A TEST
                   </h1>
 
                   <img src={frogs} id="homeImage" alt="Logo"/>
