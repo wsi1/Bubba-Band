@@ -4,6 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import useSound from 'use-sound';
 import "./Home.css";
 import HomeSettings from './HomeSettings';
+import Popup from './Popup';
 
 // audios
 import calibration from "../audios/calibration.mp3";
@@ -37,7 +38,19 @@ function playAudio(audio) {
       a.currentTime = 0;
     })
 
-    audio.play();
+    let startPlayPromise = audio.play();
+    if (startPlayPromise !== undefined) {
+      startPlayPromise.then(() => {
+        // Start whatever you need to do only after playback
+        // has begun.
+      }).catch(error => {
+        if (error.name === "NotAllowedError") {
+          console.log("BAD");
+        } else {
+          // Handle a load or playback error
+        }
+      });
+    }
   }
 }
 
@@ -88,7 +101,7 @@ const Home = (props) => {
                 <div className="lander">
                   <h1 id="homeTitle"
                     onMouseEnter={() => playAudio(welcomeAudio)}>
-                    THIS IS A TEST
+                    Welcome to Bubba Band!
                   </h1>
 
                   <img src={frogs} id="homeImage" alt="Logo"/>
@@ -116,6 +129,9 @@ const Home = (props) => {
                   </div>
                   {/* end of lander */}
                 </div> 
+                <Popup trigger={true}>
+                  <h1>My popup</h1>
+                </Popup>
               </div>
             }
         </div>
