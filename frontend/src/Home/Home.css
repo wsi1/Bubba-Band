@@ -89,3 +89,7 @@ h1, h2, h3 {
   right: 5px;
   z-index: 1;
 }
+
+div.popup {
+  z-index: 10;
+}

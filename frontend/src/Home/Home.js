@@ -43,11 +43,17 @@ function playAudio(audio) {
       startPlayPromise.then(() => {
         // Start whatever you need to do only after playback
         // has begun.
+        console.log("true")
+        return true
       }).catch(error => {
         if (error.name === "NotAllowedError") {
           console.log("BAD");
+          return false
+
         } else {
           // Handle a load or playback error
+          console.log("Possible playback error")
+          return true
         }
       });
     }
@@ -77,7 +83,10 @@ const Home = (props) => {
     const [state, setState] = useState({
         view: "home",
         displayHoverGear: false,
+        popup: !playAudio(welcomeAudio)
     });
+    
+    const [buttonPopup, setButtonPopup] = useState(false);
 
     console.log("prop: ", props);
 
@@ -129,13 +138,10 @@ const Home = (props) => {
                   </div>
                   {/* end of lander */}
                 </div> 
-                <Popup trigger={true}>
-                  <h1>My popup</h1>
-                </Popup>
+                <Popup trigger={state.popup} parentState={props.parentState} setter={setState} setTrigger={setButtonPopup}></Popup>
               </div>
             }
         </div>
-  
     );
 };
 
