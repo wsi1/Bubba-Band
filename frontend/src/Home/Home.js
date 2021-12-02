@@ -84,15 +84,15 @@ const Home = (props) => {
     const [state, setState] = useState({
         view: "home",
         displayHoverGear: false,
-        popup: !playAudio(welcomeAudio)
     });
 
+    // if the popup hasn't closed yet and we can't play the audio, bring the popup up
+    let popup = !props.parentState.popupClosed && !playAudio(welcomeAudio) ? true : false;
+
     console.log("RERENDERED");
-    
-    const [buttonPopup, setButtonPopup] = useState(false);
 
     //console.log("prop: ", props);
-    console.log("display popup", state.popup);
+    console.log("display popup", popup);
     console.log("!playAudio", !playAudio(welcomeAudio));
 
     hoverIsOn = props.parentState.hover;
@@ -144,7 +144,7 @@ const Home = (props) => {
                   {/* end of lander */}
                 </div> 
                 {console.log(state)}
-                <Popup trigger={state.popup} parentState={props.parentState} setter={setState} setTrigger={setButtonPopup}></Popup>
+                <Popup trigger={popup} parentState={props.parentState} setter={setState}></Popup>
               </div>
             }
         </div>
