@@ -152,7 +152,7 @@ const Calibration = (props) => {
                             > Waiting for a gesture to be made ... 
                         </p>
                     </div>
-                    {/* <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button> */}
+                    <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button>
                 </div>
 
                 : state.view === "calibrate" ?
@@ -170,9 +170,9 @@ const Calibration = (props) => {
                                 onMouseEnter={() => playAudio(needsLabelAudio, hover)}>
                                 Gesture needs a label!
                             </h1>
-                            <p id="instructions">Click "Add Gesture" to make a new gesture label or select an existing gesture below.</p>
+                            <p id="instructions">Select an existing gesture below.</p>
                             <div class="buttons">
-                                <button
+                                {/* <button
                                     className="add"
                                     onMouseEnter={() => playAudio(addGestureAudio, hover)}
                                     onClick={() => { changeView("add", state, setState, state.uuid) }}>
@@ -180,14 +180,14 @@ const Calibration = (props) => {
                                 </button>
                                 <br />
                                 <hr className="divide" />
-                                <br />
+                                <br /> */}
                                 <div className="gestures">
                                     {props.existingGestures.length == 0 ?
                                         <div>
                                             <p id="noExisting">No gestures have been created yet.</p>
                                         </div>
                                         :
-                                        <div>
+                                        <div id="gestureContainer">
                                             {(props.existingGestures).map((gesture) => <button 
                                                 type="button"
                                                 id="gestureButton"

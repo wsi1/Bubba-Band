@@ -97,12 +97,32 @@ hr.divide {
 }
 
 .gestures {
+    position: absolute;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
+    height: fit-content;
     gap: 50px 30px;
     font-size: 1.2em;
+    flex-direction: row;
+
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#gestureContainer {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    /* height: fit-content; */
+    gap: 50px 30px;
+    font-size: 1.2em;
+    flex-direction: row;
+
+    width: 80vw;
+    height: 55vh;
 }
 
 .buttons {
@@ -111,6 +131,7 @@ hr.divide {
 
 #gestureButton {
     margin: 15px;
+    width: 30vw;
 }
 
 #skip {

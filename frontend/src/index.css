@@ -27,8 +27,12 @@ div > button:not(#settingsGear, .goBackButton) {
   border: none;
   border-radius: 15px;
   color: #e8e8e8;
+}
+
+div > button:not(#settingsGear, .goBackButton, ) {
   width: fit-content;
 }
+
 
 button:hover:not(#settingsGear, .goBackButton) {
   background-color:#e8e8e8;

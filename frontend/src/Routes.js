@@ -13,7 +13,7 @@ export default class Routes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gestures: ["Hard tap", "Soft tap"],
+            gestures: ["Hard tap", "Soft tap", "Hold"],
             hover: true,
             // this is true if the popup has already gone off
             popupClosed: false
