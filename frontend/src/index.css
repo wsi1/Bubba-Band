@@ -22,10 +22,10 @@ h1, h2, h3, p {
 
 div > button:not(#settingsGear, .goBackButton) {
   padding: 20px;
-  background-color: #E33A41;
+  background-color: #E74E5F;
   border: 4px solid #192C55;
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   color: #e8e8e8;
 }
 
@@ -33,12 +33,11 @@ div > button:not(#settingsGear, .goBackButton, ) {
   width: fit-content;
 }
 
-
 button:hover:not(#settingsGear, .goBackButton) {
   background-color:#e8e8e8;
   padding: 16px;
   border: 4px solid #e8e8e8;
-  color: #E33A41;
+  color: #E74E5F;
 }
 
 .goBackButton {

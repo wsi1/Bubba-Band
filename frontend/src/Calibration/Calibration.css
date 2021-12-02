@@ -116,7 +116,6 @@ hr.divide {
     display: flex;
     justify-content: center;
     align-items: stretch;
-    /* height: fit-content; */
     gap: 50px 30px;
     font-size: 1.2em;
     flex-direction: row;

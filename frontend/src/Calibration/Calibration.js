@@ -65,7 +65,7 @@ function handleSubmit(socket, val, state, setState) {
     socket.emit("frontend", {
         uuid: state.uuid,
         label: val,
-      });
+    });
     console.log("emitting UUID:", state.uuid);
     console.log("emitting label:", val);
 
@@ -170,7 +170,7 @@ const Calibration = (props) => {
                                 onMouseEnter={() => playAudio(needsLabelAudio, hover)}>
                                 Gesture needs a label!
                             </h1>
-                            <p id="instructions">Select an existing gesture below.</p>
+                            <p id="instructions">Select a gesture below to classify the previous gesture.</p>
                             <div class="buttons">
                                 {/* <button
                                     className="add"
