@@ -74,6 +74,10 @@ def write_model_to_file(file_ptr, m):
         file_ptr.write(line + "\n")
     file_ptr.truncate()
 
+def delete_model(file_ptr, m):
+    # set model to empty and empty the file
+    m = {}
+    file_ptr.truncate(0)
 
 def gestures():
     print("listening for gestures")
