@@ -15,6 +15,7 @@ import settings_audio from "../audios/settings.mp3";
 
 // images
 import frogs from "../images/frog.gif"
+import frogStatic from "../images/frog-static.png"
 import gear from "../images/gear.png"
 import gearHover from "../images/gear_hover.png"
 
@@ -27,6 +28,7 @@ let settingsAudio = new Audio(settings_audio);
 let allAudios = [calibrationAudio, interpretationAudio, selectModeAudio, welcomeAudio, settingsAudio];
 
 let hoverIsOn = true;
+let animateIsOn = true;
 
 function playAudio(audio) {
   // if the mouse moves to another element before the previous sound finishes,
@@ -78,7 +80,7 @@ function handleGearClick(state, setState) {
 }
 
 const Home = (props) => {
-    console.log("props hehe", props)
+    // console.log("props hehe", props)
 
     const history = useHistory();
     const [state, setState] = useState({
@@ -89,13 +91,14 @@ const Home = (props) => {
     // if the popup hasn't closed yet and we can't play the audio, bring the popup up
     let popup = !props.parentState.popupClosed && !playAudio(welcomeAudio) ? true : false;
 
-    console.log("RERENDERED");
+    // console.log("RERENDERED");
 
     //console.log("prop: ", props);
-    console.log("display popup", popup);
-    console.log("!playAudio", !playAudio(welcomeAudio));
+    // console.log("display popup", popup);
+    // console.log("!playAudio", !playAudio(welcomeAudio));
 
-    hoverIsOn = props.parentState.hover;
+    hoverIsOn = props.parentState.audioEnabled;
+    animateIsOn = props.parentState.animateEnabled;
 
     return (
       <div className="Home">
@@ -118,8 +121,11 @@ const Home = (props) => {
                     Welcome to Bubba Band!
                   </h1>
 
+                  {animateIsOn ?
                   <img src={frogs} id="homeImage" alt="Logo"/>
-
+                  :
+                  <img src={frogStatic} id="homeImage" alt="Logo"/>
+                }
                   <p id="home"
                   onMouseEnter={() => playAudio(selectModeAudio)}>
                     Select a mode below to begin

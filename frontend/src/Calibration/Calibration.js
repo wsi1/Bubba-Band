@@ -7,8 +7,10 @@ import "./Calibration.css";
 
 // visuals
 import waiting from "../images/messages-typing.gif";
+import waitingStatic from '../images/messages-typing-static.png'; 
 import arrow from "../images/arrow.png"
 import arrowHover from "../images/arrow_hover.png"
+
 
 // audios
 import back_audio from "../audios/go_back.mp3";
@@ -91,7 +93,8 @@ function changeArrow(state, setState, mouseEnter) {
 const Calibration = (props) => {
     console.log("prop: ", props.parentState);
 
-    let hover = props.parentState.hover;
+    let hover = props.parentState.audioEnabled;
+    let animate = props.parentState.animateEnabled;
 
     const history = useHistory();
     const [state, setState] = useState({
@@ -147,9 +150,13 @@ const Calibration = (props) => {
                         Calibration
                     </h1>
                     <div className="calibrationContainer">
-                        <img src={waiting} alt="Logo" />
-                        <p onMouseEnter={() => playAudio(waitingAudio, hover)}
-                            > Waiting for a gesture to be made ... 
+                        {animate ? 
+                        <img src={waiting} alt="Logo" /> :
+                        <img src={waitingStatic} alt="Logo" />
+                        }
+                        
+                        <p onMouseEnter={() => playAudio(waitingAudio, hover)}>
+                            Waiting for a gesture to be made ... 
                         </p>
                     </div>
                     <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button>
