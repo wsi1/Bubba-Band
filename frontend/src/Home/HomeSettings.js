@@ -81,6 +81,16 @@ function changeArrow(state, setState, mouseEnter) {
   });
 }
 
+function confirmReset() {
+  if (window.confirm("WARNING: Proceeding will erase all classification data. Click 'OK' to continue.")) {
+    window.alert("Calibration data has been erased.")
+
+    // TODO: add socket code to tell pi to delete model
+
+    console.log("plz reset the model");
+  }
+}
+
 const HomeSettings = (props) => {
 
   const [state, setState] = useState({
@@ -103,62 +113,64 @@ const HomeSettings = (props) => {
         <img src={state.displayHoverArrow ? arrowHover : arrow} />
       </button>
       <div id="settingContainer">
-        <div class="homeSettings">
-            <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Animations</p>
-            <p class="caption">Turn on to display animations.</p>
-            {state.animateEnabled ? 
+          <div class="homeSettings">
+              <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Animations</p>
+              <p class="caption">Turn on to display animations.</p>
+              {state.animateEnabled ? 
+              <div>
+                <img className="icon" src={displayIcon} alt="Eye Icon" /> 
+              </div>
+              :
+              <div>
+                <img className="icon" src={noDisplayIcon} alt="No Eye Icon" />
+              </div>
+              }
+              {/* <p class="descr">{state.animateEnabled ? "Animations for gestures are ON" : "Animations for gestures are OFF"}</p> */}
+              <div class="buttonContainer">
+                <label class="switch">
+                  <input type="checkbox" id="displayToggle" checked={state.animateEnabled} onChange={() => updateDisplayToggle(props.parentState, setState)}/>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+          </div>
+
+          <div class="vl"></div>
+
+          <div class="homeSettings">
+            <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Audio</p>
+            <p class="caption">Turn on to hear text-to-speech audio.</p>
+            {state.audioEnabled ? 
             <div>
-              <img className="icon" src={displayIcon} alt="Eye Icon" /> 
+              <img className="icon" src={sound_icon} alt="Sound Icon" /> 
             </div>
             :
             <div>
-              <img className="icon" src={noDisplayIcon} alt="No Eye Icon" />
+              <img className="icon" src={noSound_icon} alt="No Sound Icon" />
             </div>
             }
-            <p class="descr">{state.animateEnabled ? "Animations for gestures are ON" : "Animations for gestures are OFF"}</p>
+            {/* <p class="descr">{state.audioEnabled ? "Text-to-speech audio is ON" : "Text-to-speech audio is OFF"}</p> */}
             <div class="buttonContainer">
               <label class="switch">
-                <input type="checkbox" id="displayToggle" checked={state.animateEnabled} onChange={() => updateDisplayToggle(props.parentState, setState)}/>
+                <input type="checkbox" id="hoverToggle" checked={state.audioEnabled} onChange={() => updateHoverToggle(props.parentState, setState)}/>
                 <span class="slider round"></span>
               </label>
             </div>
-        </div>
-
-        <div class="homeSettings">
-          <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Audio</p>
-          <p class="caption">Turn on to hear text-to-speech audio.</p>
-          {state.audioEnabled ? 
-          <div>
-            <img className="icon" src={sound_icon} alt="Sound Icon" /> 
           </div>
-          :
-          <div>
-            <img className="icon" src={noSound_icon} alt="No Sound Icon" />
-          </div>
-          }
-          <p class="descr">{state.audioEnabled ? "Text-to-speech audio is ON" : "Text-to-speech audio is OFF"}</p>
-          <div class="buttonContainer">
-            <label class="switch">
-              <input type="checkbox" id="hoverToggle" checked={state.audioEnabled} onChange={() => updateHoverToggle(props.parentState, setState)}/>
-              <span class="slider round"></span>
-            </label>
-          </div>
+          <div class="vl"></div>
+          <div class="homeSettings">
+            {/* TODO: add rest model audio on hover */}
+            <p class="title">Reset</p>
+            <p class="caption" id="reset">Press to erase all calibration data and reset the gesture classification model.</p>
+            <div class="buttonContainer">
+              <button 
+                variant="btn btn-success" 
+                class="resetButton" 
+                onClick={() => confirmReset()}> 
+                Reset Data and Model
+              </button>
+            </div>
         </div>
-        <div class="homeSettings">
-                    {/* TODO: add rest model audio on hover */}
-                    <p class="title">Data and Model</p>
-          <p class="caption">Press to erase all of the calibration data and reset the gesture model.</p>
-        <div class="buttonContainer">
-          <button 
-            variant="btn btn-success" 
-            class="resetButton" 
-            onClick={() => console.log("plz reset the model")}> 
-            Reset Data and Model
-          </button>
-        </div>
-      </div>
-      </div>
-      
+      </div>  
       <h1 id="settingsHeader"
         onMouseEnter={() => playAudio(settingsAudio, state.audioEnabled)}>
           Settings
