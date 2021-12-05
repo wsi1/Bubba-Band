@@ -1,4 +1,5 @@
-import React, { Component, useState, setState } from 'react';
+import React, { Component, useState, setState, useContext } from 'react';
+import { SocketContext } from '../context/socket';
 import "./HomeSettings.css";
 
 //images
@@ -90,6 +91,8 @@ const HomeSettings = (props) => {
   console.log("HomeSettings props:", props);
   console.log("HomeSettings state:", state);
 
+  const socket = useContext(SocketContext);
+
   return (
     <div>
       <button 
@@ -141,6 +144,19 @@ const HomeSettings = (props) => {
             </label>
           </div>
         </div>
+        <div class="homeSettings">
+                    {/* TODO: add rest model audio on hover */}
+                    <p class="title">Data and Model</p>
+          <p class="caption">Press to erase all of the calibration data and reset the gesture model.</p>
+        <div class="buttonContainer">
+          <button 
+            variant="btn btn-success" 
+            class="resetButton" 
+            onClick={() => console.log("plz reset the model")}> 
+            Reset Data and Model
+          </button>
+        </div>
+      </div>
       </div>
       
       <h1 id="settingsHeader"
