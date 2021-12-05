@@ -113,7 +113,7 @@ const AddGesture = (props) => {
   const [playBack] = useSound(back);
   const [playAdd] = useSound(addGesture);
 
-  hoverIsOn = props.hover;
+  hoverIsOn = props.audioEnabled;
 
   console.log("AddGesture state: ", state);
 

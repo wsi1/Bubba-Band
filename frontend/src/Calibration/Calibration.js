@@ -7,8 +7,10 @@ import "./Calibration.css";
 
 // visuals
 import waiting from "../images/messages-typing.gif";
+import waitingStatic from '../images/messages-typing-static.png'; 
 import arrow from "../images/arrow.png"
 import arrowHover from "../images/arrow_hover.png"
+
 
 // audios
 import back_audio from "../audios/go_back.mp3";
@@ -65,7 +67,7 @@ function handleSubmit(socket, val, state, setState) {
     socket.emit("frontend", {
         uuid: state.uuid,
         label: val,
-      });
+    });
     console.log("emitting UUID:", state.uuid);
     console.log("emitting label:", val);
 
@@ -91,7 +93,8 @@ function changeArrow(state, setState, mouseEnter) {
 const Calibration = (props) => {
     console.log("prop: ", props.parentState);
 
-    let hover = props.parentState.hover;
+    let hover = props.parentState.audioEnabled;
+    let animate = props.parentState.animateEnabled;
 
     const history = useHistory();
     const [state, setState] = useState({
@@ -147,12 +150,16 @@ const Calibration = (props) => {
                         Calibration
                     </h1>
                     <div className="calibrationContainer">
-                        <img src={waiting} alt="Logo" />
-                        <p onMouseEnter={() => playAudio(waitingAudio, hover)}
-                            > Waiting for a gesture to be made ... 
+                        {animate ? 
+                        <img src={waiting} alt="Logo" /> :
+                        <img src={waitingStatic} alt="Logo" />
+                        }
+                        
+                        <p onMouseEnter={() => playAudio(waitingAudio, hover)}>
+                            Waiting for a gesture to be made ... 
                         </p>
                     </div>
-                    {/* <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button> */}
+                    <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button>
                 </div>
 
                 : state.view === "calibrate" ?
@@ -170,9 +177,9 @@ const Calibration = (props) => {
                                 onMouseEnter={() => playAudio(needsLabelAudio, hover)}>
                                 Gesture needs a label!
                             </h1>
-                            <p id="instructions">Click "Add Gesture" to make a new gesture label or select an existing gesture below.</p>
+                            <p id="instructions">Select a gesture below to classify the previous gesture.</p>
                             <div class="buttons">
-                                <button
+                                {/* <button
                                     className="add"
                                     onMouseEnter={() => playAudio(addGestureAudio, hover)}
                                     onClick={() => { changeView("add", state, setState, state.uuid) }}>
@@ -180,14 +187,14 @@ const Calibration = (props) => {
                                 </button>
                                 <br />
                                 <hr className="divide" />
-                                <br />
+                                <br /> */}
                                 <div className="gestures">
                                     {props.existingGestures.length == 0 ?
                                         <div>
                                             <p id="noExisting">No gestures have been created yet.</p>
                                         </div>
                                         :
-                                        <div>
+                                        <div id="gestureContainer">
                                             {(props.existingGestures).map((gesture) => <button 
                                                 type="button"
                                                 id="gestureButton"
