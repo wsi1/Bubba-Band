@@ -74,9 +74,10 @@ def write_model_to_file(file_ptr, m):
         file_ptr.write(line + "\n")
     file_ptr.truncate()
 
-def delete_model(file_ptr, m):
+def reset_model(file_ptr):
     # set model to empty and empty the file
-    m = {}
+    global model
+    model = {}
     file_ptr.truncate(0)
 
 def gestures():
@@ -100,8 +101,10 @@ def get_data():
         save_dict[gesture_id] = {"data": data["data"], "time": curr_time}
         gesture = infer_gesture(data["data"])
         send_gesture(gesture, gesture_id)
-    else:
+    elif data["type"] == "update_model":
         model = update_model(save_dict[data["uuid"]], data["data"])
+    elif data["type"] == "reset_model":
+        reset_model(model_file)
 
     delta = datetime.timedelta(minutes=2)
     cutoff = curr_time - delta
