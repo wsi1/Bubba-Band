@@ -76,7 +76,6 @@ p {
   transition: .4s;
   height: 40px;
   width: 70px;
-  margin-top: 30px;
 }
 
 .slider:before {
@@ -137,9 +136,9 @@ input:checked + .slider:after
 
 .icon {
   display: block;
-  height: 30vh;
+  height: 25vh;
   width: auto;
-  margin: auto;
+  margin-bottom: 60px;
 }
 
 .descr {
@@ -173,4 +172,16 @@ input:checked + .slider:after
 .caption {
   font-size: 1.3vw;
   width: 30vw;
+}
+
+.resetIcon {
+  display: block;
+  height: 35vh;
+  width: auto;
+}
+
+.toggleCaption {
+  font-size: 1.3vw;
+  width: 30vw;
+  margin-bottom: 100px;
 }

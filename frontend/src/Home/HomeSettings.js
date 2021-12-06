@@ -7,6 +7,7 @@ import sound_icon from "../images/volume-up-solid.svg";
 import noSound_icon from "../images/volume-mute-solid.svg";
 import displayIcon from "../images/eye-solid.svg";
 import noDisplayIcon from "../images/eye-slash-solid.svg";
+import reset from "../images/reset.svg";
 import arrow from "../images/arrow.png"
 import arrowHover from "../images/arrow_hover.png"
 
@@ -115,7 +116,7 @@ const HomeSettings = (props) => {
       <div id="settingContainer">
           <div class="homeSettings">
               <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Animations</p>
-              <p class="caption">Turn on to display animations.</p>
+              <p class="toggleCaption">Turn on to display animations.</p>
               {state.animateEnabled ? 
               <div>
                 <img className="icon" src={displayIcon} alt="Eye Icon" /> 
@@ -138,7 +139,7 @@ const HomeSettings = (props) => {
 
           <div class="homeSettings">
             <p class="title" onMouseEnter={() => playAudio(animationsAudio)}>Audio</p>
-            <p class="caption">Turn on to hear text-to-speech audio.</p>
+            <p class="toggleCaption">Turn on to hear text-to-speech audio.</p>
             {state.audioEnabled ? 
             <div>
               <img className="icon" src={sound_icon} alt="Sound Icon" /> 
@@ -159,8 +160,11 @@ const HomeSettings = (props) => {
           <div class="vl"></div>
           <div class="homeSettings">
             {/* TODO: add rest model audio on hover */}
-            <p class="title">Reset</p>
+            <p class="title">Reset data</p>
             <p class="caption" id="reset">Press to erase all calibration data and reset the gesture classification model.</p>
+            <div>
+                <img className="resetIcon" src={reset} alt="Eye Icon" /> 
+            </div>
             <div class="buttonContainer">
               <button 
                 variant="btn btn-success" 
