@@ -4,6 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import useSound from 'use-sound';
 import "./Home.css";
 import HomeSettings from './HomeSettings';
+import Popup from './Popup';
 
 // audios
 import calibration from "../audios/calibration.mp3";
@@ -14,6 +15,7 @@ import settings_audio from "../audios/settings.mp3";
 
 // images
 import frogs from "../images/frog.gif"
+import frogStatic from "../images/frog-static.png"
 import gear from "../images/gear.png"
 import gearHover from "../images/gear_hover.png"
 
@@ -26,6 +28,7 @@ let settingsAudio = new Audio(settings_audio);
 let allAudios = [calibrationAudio, interpretationAudio, selectModeAudio, welcomeAudio, settingsAudio];
 
 let hoverIsOn = true;
+let animateIsOn = true;
 
 function playAudio(audio) {
   // if the mouse moves to another element before the previous sound finishes,
@@ -37,7 +40,24 @@ function playAudio(audio) {
       a.currentTime = 0;
     })
 
-    audio.play();
+    let startPlayPromise = audio.play();
+    if (startPlayPromise !== undefined) {
+      startPlayPromise.then(() => {
+        // Start whatever you need to do only after playback
+        // has begun.
+        return true;
+
+      }).catch(error => {
+        if (error.name === "NotAllowedError") {
+          console.log("BAD");
+          return false;
+        } else {
+          // Handle a load or playback error
+          console.log("Possible playback error");
+          return true;
+        }
+      });
+    }
   }
 }
 
@@ -60,15 +80,25 @@ function handleGearClick(state, setState) {
 }
 
 const Home = (props) => {
+    // console.log("props hehe", props)
+
     const history = useHistory();
     const [state, setState] = useState({
         view: "home",
         displayHoverGear: false,
     });
 
-    console.log("prop: ", props);
+    // if the popup hasn't closed yet and we can't play the audio, bring the popup up
+    let popup = !props.parentState.popupClosed && !playAudio(welcomeAudio) ? true : false;
 
-    hoverIsOn = props.parentState.hover;
+    // console.log("RERENDERED");
+
+    //console.log("prop: ", props);
+    // console.log("display popup", popup);
+    // console.log("!playAudio", !playAudio(welcomeAudio));
+
+    hoverIsOn = props.parentState.audioEnabled;
+    animateIsOn = props.parentState.animateEnabled;
 
     return (
       <div className="Home">
@@ -91,8 +121,11 @@ const Home = (props) => {
                     Welcome to Bubba Band!
                   </h1>
 
+                  {animateIsOn ?
                   <img src={frogs} id="homeImage" alt="Logo"/>
-
+                  :
+                  <img src={frogStatic} id="homeImage" alt="Logo"/>
+                }
                   <p id="home"
                   onMouseEnter={() => playAudio(selectModeAudio)}>
                     Select a mode below to begin
@@ -116,10 +149,11 @@ const Home = (props) => {
                   </div>
                   {/* end of lander */}
                 </div> 
+                {console.log(state)}
+                <Popup trigger={popup} parentState={props.parentState} setter={setState}></Popup>
               </div>
             }
         </div>
-  
     );
 };
 

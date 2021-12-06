@@ -4,6 +4,7 @@ import { SocketContext } from '../context/socket';
 
 // visuals
 import waiting from '../images/messages-typing.gif'; 
+import waitingStatic from '../images/messages-typing-static.png'; 
 import nodding_head from '../images/yes.gif';
 import wave from '../images/waving.gif'; 
 import maybe from '../images/maybe.gif'; 
@@ -31,7 +32,8 @@ import "./Interpretation.css";
 
 var timeout;
 
-let hoverIsOn = true;
+let audioEnabled = true;
+let animateEnabled = true;
 
 // audios
 let yesAudio = new Audio(yes_audio);
@@ -92,26 +94,24 @@ function displayResponse(state, setState, response) {
 
     } // end of if-else
     
-    if (state.isDisplayOn) {
+    if (animateEnabled) {
         clearTimeout(timeout);
         setState({
             image: responseImage,
             text: responseText,
             backgroundColor: responseColor,
-            isDisplayOn: state.isDisplayOn,
-            isAudioOn: state.isAudioOn,
         });
     } else {
         clearTimeout(timeout);
         setState({
             text: responseText,
             backgroundColor: responseColor,
-            isDisplayOn: state.isDisplayOn,
-            isAudioOn: state.isAudioOn,
         });
     }
     
-    if (state.isAudioOn) {
+    console.log("audioEnabled:", audioEnabled);
+
+    if (audioEnabled) {
         allAudios.forEach(function(a) {
             a.pause();
             a.currentTime = 0;
@@ -125,10 +125,8 @@ function displayResponse(state, setState, response) {
     timeout = setTimeout(() => {
         setState({
             view: state.view,
-            image: waiting,
+            image: animateEnabled ? waiting : waitingStatic,
             text: 'Waiting for a gesture to be made ...',
-            isDisplayOn: state.isDisplayOn,
-            isAudioOn: state.isAudioOn,
             displayHoverGear: state.displayHoverGear
         });
     }, 3000);
@@ -144,7 +142,7 @@ function setViewToSettings(state, setState) {
 }
 
 function playAudio(audio) {
-    if (hoverIsOn) {
+    if (audioEnabled) {
         // if the mouse moves to another element before the previous sound finishes,
         // stop the previous sound before playing the new sound
         // this is to prevent sounds from overlapping one another with quick mouse movement
@@ -174,8 +172,6 @@ function changeGear(state, setState, mouseEnter) {
         displayYes: state.displayYes,
         displayNo: state.displayNo,
         displayHi: state.displayHi,
-        isDisplayOn: state.isDisplayOn,
-        isAudioOn: state.isAudioOn,
         image: state.image,
         text: state.text,
         displayHoverGear: mouseEnter,
@@ -190,8 +186,6 @@ function changeArrow(state, setState, mouseEnter) {
         displayYes: state.displayYes,
         displayNo: state.displayNo,
         displayHi: state.displayHi,
-        isDisplayOn: state.isDisplayOn,
-        isAudioOn: state.isAudioOn,
         image: state.image,
         text: state.text,
         displayHoverGear: state.displayHoverGear,
@@ -201,7 +195,8 @@ function changeArrow(state, setState, mouseEnter) {
 
 const Interpretation = (props) => {
     console.log("prop: ", props.parentState);
-    hoverIsOn = props.parentState.hover;
+    audioEnabled = props.parentState.audioEnabled;
+    animateEnabled = props.parentState.animateEnabled;
 
     const socket = useContext(SocketContext);
     let firstGesture = ""
@@ -242,9 +237,7 @@ const Interpretation = (props) => {
         displayYes: false,
         displayNo: false,
         displayHi: false,
-        isDisplayOn: true,
-        isAudioOn: true,
-        image: waiting,
+        image: animateEnabled ? waiting : waitingStatic,
         text: 'Waiting for a gesture to be made ...',
         displayHoverGear: false,
         displayHoverArrow: false,
@@ -253,8 +246,6 @@ const Interpretation = (props) => {
     const stateRef = useRef();
     stateRef.current = {
         view: state.view,
-        isDisplayOn: state.isDisplayOn,
-        isAudioOn: state.isAudioOn,
     };
 
     function interpretGesture() {
@@ -298,12 +289,12 @@ const Interpretation = (props) => {
                     <img src={state.displayHoverArrow ? arrowHover : arrow} />
                 </button>
 
-                <button id="settings" id="settingsGear" 
+                {/* <button id="settings" id="settingsGear" 
                     onMouseEnter={() => handleHover(state, setState, 'settings', true)}
                     onMouseLeave={() => changeGear(state, setState, false)}
                     onClick={() => setViewToSettings(state, setState)}>
                     <img src={state.displayHoverGear ? gearHover : gear} />
-                </button>
+                </button> */}
 
                 <h1 id="interpretHeader"
                     style={{backgroundColor: state.backgroundColor}}
@@ -313,7 +304,7 @@ const Interpretation = (props) => {
 
                 <div className="center" style={{backgroundColor: state.backgroundColor}}>
                     <img class={state.image == undefined ? "hidden" : ""} style={{backgroundColor: state.backgroundColor}} src={state.image} alt="Logo"/>
-                    <p 
+                    <p
                         style={{backgroundColor: state.backgroundColor}}
                         onMouseEnter={() => {
                             if (state.text == "Waiting for a gesture to be made ...") {
@@ -324,7 +315,11 @@ const Interpretation = (props) => {
                     </p>
                 </div>
 
-                <div class="testButtons">
+                    <button id="yes" 
+                        onClick={() => displayResponse(state, setState, 'yes')}>
+                        yes
+                    </button>
+                {/* <div class="testButtons">
                     <button id="yes" 
                         onClick={() => displayResponse(state, setState, 'yes')}>
                         yes
@@ -345,7 +340,7 @@ const Interpretation = (props) => {
                         onClick={() => displayResponse(state, setState, 'happy')}>
                         fun
                     </button>
-                </div>
+                </div> */}
             </div>
         }
         </div>

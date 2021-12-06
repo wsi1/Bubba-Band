@@ -13,14 +13,17 @@ export default class Routes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gestures: ["Hard tap", "Soft tap"],
-            hover: true
+            gestures: ["Hard tap", "Soft tap", "Hold"],
+            audioEnabled: true,
+            animateEnabled: true,
+            // this is true if the popup has already gone off
+            popupClosed: false
         };
     }
     
     render() {
         return (
-            <Router history={history}>
+            <Router history={history} basename="/frontend/">
                 <Switch>
                     <Route path="/" exact><Home setter={this.setState} parentState={this.state}/></Route>
                     <Route path="/calibration" exact><Calibration existingGestures={this.state.gestures} parentState={this.state}/></Route>

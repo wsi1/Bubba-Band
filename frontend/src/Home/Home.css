@@ -77,7 +77,7 @@ h1, h2, h3 {
 }
 
 #settingsGear img {
-  height: 12vh;
+  height: 10vh;
   background-color: transparent;
 }
 
@@ -85,7 +85,11 @@ h1, h2, h3 {
   border: none;
   position: absolute;
   background-color: transparent;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   z-index: 1;
+}
+
+div.popup {
+  z-index: 10;
 }
