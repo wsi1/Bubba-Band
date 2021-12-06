@@ -12,7 +12,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 @socketio.on("raspberry")
 def handle_raspberry_event(json):
     print("received json: " + str(json))
-    if json["bubbaspace"]:
+    if "bubbaspace" in json:
         socketio.emit("bubbaspace", json)
     socketio.emit("frontend", json)
 
