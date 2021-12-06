@@ -82,11 +82,11 @@ function changeArrow(state, setState, mouseEnter) {
   });
 }
 
-function confirmReset() {
+function confirmReset(socket) {
   if (window.confirm("WARNING: Proceeding will erase all classification data. Click 'OK' to continue.")) {
     window.alert("Calibration data has been erased.")
 
-    // TODO: add socket code to tell pi to delete model
+    socket.emit("frontend", {action: "reset_model"});
 
     console.log("plz reset the model");
   }
@@ -169,7 +169,7 @@ const HomeSettings = (props) => {
               <button 
                 variant="btn btn-success" 
                 class="resetButton" 
-                onClick={() => confirmReset()}> 
+                onClick={() => confirmReset(socket)}> 
                 Reset Data and Model
               </button>
             </div>

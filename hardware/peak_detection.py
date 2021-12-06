@@ -20,6 +20,7 @@ class real_time_peak_detection:
 
     def thresholding_algo(self, new_value):
         self.y.append(new_value + self.rng.normal(0, 0.001))
+        #self.y.append(new_value)
         i = len(self.y) - 1
         self.length = len(self.y)
         if i < self.lag:
