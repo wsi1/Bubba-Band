@@ -27,5 +27,5 @@ def make_gesture():
 def disconnect():
     print('disconnected from server')
 
-sio.connect('http://ec2-3-17-64-150.us-east-2.compute.amazonaws.com/')
+sio.connect('https://bubbaband.naitian.org/')
 sio.wait()
