@@ -165,6 +165,8 @@ def process_signal(json):
     print("Received signal")
     if "label" in json:
         add_to_queue("update_model", json["label"], json["uuid"])
+    if "action" in json and json["action"] == "reset_model":
+        add_to_queue("reset_model", [])
     print(json)
 
 @sio.event
