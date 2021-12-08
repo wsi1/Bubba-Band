@@ -1,4 +1,5 @@
-# **Bubba-Band**
+# **Bubba Band**
+![landing page](assets/landing.png)
 
 ## **Installation**
 
@@ -13,66 +14,30 @@ Then install the dependencies in `requirements.txt`
 pip install -r backend/requirements.txt
 ```
 
-The frontend is written with Node. To install dependencies, navigate into the
-`frontend/` folder and run `yarn` or `npm` to install the node dependencies.
-
-```
-cd frontend/
-yarn install
-```
-or
-```
-cd frontend/
-npm install
-```
-
 ## **Running the application**
 
-The backend is hosted on http://ec2-3-17-64-150.us-east-2.compute.amazonaws.com/ so the armband is completely wireless.
+The frontend is running on bubbaband.naitian.org/frontend/ and the backend is hosted on bubbaband.naitian.org so the armband is completely wireless.
 
-### **Frontend Setup**
+### **Frontend**
 
-To run the frontend, run the following in  new terminal (depending on `yarn` or `npm`):
-```
-cd frontend/
-yarn start
-```
-or
-```
-cd frontend/
-npm start
-```
+To run the frontend, go to bubbaband.naitian.org/frontend/ (trailing slash needed).
 
 ### **Hardware Setup**
 
 This project was implemented and tested with our armband hardware (Raspberry Pi, pressure sensor, circuit), but if you don't have the hardware, you can run our Pi emulator to explore the UI. However, since this isn't what we originally built the application for, the results may vary.
 
 #### **Armband Setup**
-The breadboard and Pi should be prewired.
+The breadboard and Pi should be prewired. Below is a picture of the breadboard setup.
 
 1. Hook the portable battery up to the Pi using the micro-USB port
-2. Slip the armband onto your wrist
-3. Put your wrist in between the two wires leading up to the sensor so that one wire is to the left of your wrist and one wire is to the right of your wrist and so that the sensor is touching the back of your hand with the squares facing away from your wrist
-4. Secure the bottom of the sensor (by the wires) with a velcro strip around your wrist 
-5. Hold the sensor against the back of your hand and use the velcro to secure both the base of the sensor (by the wires) and the tip of the sensor
+2. Slip the armband onto your wrist with the pocket on the back of the hand
+3. Fasten the bottom of the sensor (by the wires) with a velcro strip around your wrist the velcro strap in between the two sensor wires so that the sensor cannot slip out. There should be one wire on either side of the velcro strap
 
 Using these steps, your hardware setup should look like the following:
 
-![armband setup](assets/armband_setup.jpg)
+![armband setup](assets/armband_setup.png)
 
-On the Pi, open a terminal and navigate to the `Bubba-Band` folder, then from there, run the Raspberry Pi file `main.py`:
-
-```
-python3 hardware/main.py
-```
-
-This will start the sensor on the Raspberry Pi. To send signals and test it out, tap or hold your wrist according to Bubba's gestures:
-
-- 1 hard tap = Yes
-- 2 hard taps = Hi
-- 5+ hard taps = Happy
-- Holding wrist down = Need help
-- 1 soft tap = Maybe
+On startup of the hardware, it should automatically connect to the Eduroam WiFi and run `main.py`. If you need to configure the WiFi, please contact us or use [this tutorial](https://raspberrypihq.com/how-to-connect-your-raspberry-pi-to-wifi/) to set it up by yourself.
 
 #### **Raspberry Pi Emulator**
 
@@ -84,11 +49,11 @@ In the root directory:
 ```
 python3 hardware/fakePi/fakePi.py
 ```
-
+## **Gesture Mapping**
 To send a signal to the frontend, you either input a 1 (hard tap), 2 (soft tap) or 3 (holding wrist down) in the terminal.
 
 - 1 hard tap = Yes
-- 2 hard taps = Hi
-- 5+ hard taps = Happy
-- Holding wrist down = Need help
 - 1 soft tap = Maybe
+- Holding wrist down = Need help
+- 2 gestures = Hi
+- 5+ gestures = Happy
