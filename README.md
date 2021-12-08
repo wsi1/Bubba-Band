@@ -16,7 +16,7 @@ pip install -r backend/requirements.txt
 
 ## **Running the application**
 
-The frontend is running on [bubbaband.naitian.org/frontend/](https://bubbaband.naitian.org/frontend/) and the backend is hosted on [bubbaband.naitian.org](bubbaband.naitian.org) so the armband is completely wireless.
+The frontend is running on [bubbaband.naitian.org/frontend/](https://bubbaband.naitian.org/frontend/) and the backend is hosted on [bubbaband.naitian.org](https://bubbaband.naitian.org) so the armband is completely wireless.
 
 ### **Frontend**
 
