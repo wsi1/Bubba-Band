@@ -102,7 +102,8 @@ def get_data():
         gesture = infer_gesture(data["data"])
         send_gesture(gesture, gesture_id)
     elif data["type"] == "update_model":
-        model = update_model(save_dict[data["uuid"]], data["data"])
+        if data["uuid"] in save_dict:
+            model = update_model(save_dict[data["uuid"]], data["data"])
     elif data["type"] == "reset_model":
         reset_model(model_file)
 
