@@ -208,13 +208,10 @@ const Interpretation = (props) => {
     function socketHandler(data) {
       console.log({firstGesture, numGestures})
         window.clearTimeout(timeout)
-        if (firstGesture === "Hard tap") {
-            numGestures += 1;
+        if (numGestures === 0) {
+            firstGesture = data.gesture
         }
-        else {
-            firstGesture = data.gesture;
-            numGestures = 1;
-        }
+        numGestures += 1;
         timeout = window.setTimeout(interpretGesture, 2000)
     }
 
@@ -253,22 +250,24 @@ const Interpretation = (props) => {
             return;
         }
         console.log("1 second has passed, processing gesture(s) now")
-        if (firstGesture == "Soft tap") {
-            displayResponse(stateRef.current, setState, 'maybe');
-        }
-        else if (firstGesture == "Hold") {
-            displayResponse(stateRef.current, setState, 'come');
-        }
-        else if (firstGesture == "Hard tap") {
-            if (numGestures == 1) {
+        if (numGestures === 1) {
+            if (firstGesture === "Soft tap") {
+                displayResponse(stateRef.current, setState, 'maybe');
+            }
+            else if (firstGesture === "Hold") {
+                displayResponse(stateRef.current, setState, 'come');
+            }
+            else if (firstGesture === "Hard tap") {
                 displayResponse(stateRef.current, setState, 'yes');
             }
         }
-        if (numGestures == 2) {
-            displayResponse(stateRef.current, setState, 'hi');
-        }
-        else if (numGestures > 4) {
-          displayResponse(stateRef.current, setState, 'happy')
+        else {
+            if (numGestures === 2) {
+                displayResponse(stateRef.current, setState, 'hi');
+            }
+            else if (numGestures > 4) {
+                displayResponse(stateRef.current, setState, 'happy')
+            }
         }
         firstGesture = "";
         numGestures = 0;
@@ -315,10 +314,10 @@ const Interpretation = (props) => {
                     </p>
                 </div>
 
-                    <button id="yes" 
+                    {/* <button id="yes" 
                         onClick={() => displayResponse(state, setState, 'yes')}>
                         yes
-                    </button>
+                    </button> */}
                 {/* <div class="testButtons">
                     <button id="yes" 
                         onClick={() => displayResponse(state, setState, 'yes')}>

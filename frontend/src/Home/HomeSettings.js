@@ -1,5 +1,5 @@
 import React, { Component, useState, setState, useContext } from 'react';
-import { SocketContext } from '../context/socket';
+import { socket, SocketContext } from '../context/socket';
 import "./HomeSettings.css";
 
 //images

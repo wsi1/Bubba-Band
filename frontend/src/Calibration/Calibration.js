@@ -159,7 +159,7 @@ const Calibration = (props) => {
                             Waiting for a gesture to be made ... 
                         </p>
                     </div>
-                    <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button>
+                    {/* <button type="button" className="temp" onClick={() => changeView("calibrate", state, setState, "18ae3de03aa34ef686c61029f868f0ceTEST")}> Make a gesture </button> */}
                 </div>
 
                 : state.view === "calibrate" ?
